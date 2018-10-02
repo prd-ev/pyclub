@@ -15,14 +15,15 @@
 
 <body>
     <div class="container">
-        <p title="My name">My name: {{my_string}}</p>
-        <p title="Random Number">Value from the list: {{range(my_list[-1], my_list[0]) | random}}</p>
-        <p>Loop through the list:</p>
-        <ul>
-            {% for n in my_list %}
-            <li title="i did it">{{n}}</li>
-            {% endfor %}
-        </ul>
+        <form action="/login">
+            Username:<br>
+            <input type="text" name="Username" placeholder="Username">
+            <br>
+            Password:<br>
+            <input type="text" name="Password" placeholder="Password">
+            <br><br>
+            <input type="submit" value="Submit">
+        </form>
     </div>
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>

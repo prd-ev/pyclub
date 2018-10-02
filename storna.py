@@ -1,30 +1,65 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 from lista import generator
 from name import imie
+from Users import users
+from Passwords import passwords
 app = Flask(__name__)
-
-
-lista = generator()
-your_name = imie()
 
 
 @app.route('/')
 def hello():
     return 'Hello, World!'
 
-@app.route('/login/')
-def logowanie():
-    return render_template('logowanie.html')
 
+@app.route('/login/', methods=["GET","POST"])
+def login_page():
 
-@app.route("/test/")
-def template_test():
-    return render_template('template.html', my_string=your_name, my_list=lista)
+    if request.method == "POST":
+
+        attempted_username = request.form['username']
+        attempted_password = request.form['password']
+
+            #flash(attempted_username)
+            #flash(attempted_password)
+
+        if attempted_username in users and attempted_password in passwords:
+            return redirect(url_for('hi'))
+        else:
+            return redirect(url_for('loginerror'))
+    return render_template("login.html") 
+		
+@app.route('/register/', methods=["GET","POST"])
+def rejestracja():
+
+    error = ''
+    try:
+	
+        if request.method == "POST":
+		
+            attempted_username = request.form['username']
+            attempted_password = request.form['password']
+
+            #flash(attempted_username)
+            #flash(attempted_password)
+
+            users.append(attempted_username)
+            passwords.append(attempted_password)
+
+        return render_template("register.html", error = error)
+
+    except Exception as e:
+        #flash(e)
+        return render_template("register.html", error = error)
 
 
 @app.route('/app/')
 def hi():
     return "Hello there"
+
+
+@app.route('/loginerror/')
+def loginerror():
+    return render_template("loginerror.html")
 
 
 if __name__ == "__main__":
