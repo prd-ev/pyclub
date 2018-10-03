@@ -1,4 +1,5 @@
 import pymysql
+from pymysql import escape_string
 
 __author__ = "Tomasz Lakomy"
 
@@ -29,16 +30,26 @@ def create_db():
 	c.close()
 	conn.close()
 
-def create_user(userdata):
-	"""Function creates user in database"""
+def create_user(first_name, last_name, email, password):
+	"""Function creates user"""
 	c, conn = connection()
-	c.execute("INSERT INTO user VALUES(%s)", pymysql.escape_string(str(userdata)))
+	c.execute("INSERT INTO user (first_name, last_name, email, password) VALUES"
+			  "(%s, %s, %s, %s)"
+			  , (escape_string(str(first_name)), escape_string(str(last_name)), escape_string(str(email)), escape_string(str(password)))
+	)
+	conn.commit()
 	c.close()
 	conn.close()
 
-def create_event(eventdata):
-	"""Function creates event"""
+def create_organization(name, contact):
+	"""Function creates organization"""
 	c, conn = connection()
-	c.execute("INSERT INTO event VALUES(%s)", pymysql.escape_string(str(eventdata)))
+	c.execute("INSERT INTO organization (name, contact) VALUES"
+			  "(%s, %s)"
+			  , (escape_string(str(name)), escape_string(str(contact)))
+	)
+	conn.commit()
 	c.close()
 	conn.close()
+
+create_organization('fajnaorganizacja',' marczin@zsk.pl')
