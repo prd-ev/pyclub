@@ -51,5 +51,3 @@ def create_organization(name, contact):
 	conn.commit()
 	c.close()
 	conn.close()
-
-create_organization('fajnaorganizacja',' marczin@zsk.pl')
