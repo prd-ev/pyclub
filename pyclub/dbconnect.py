@@ -28,3 +28,17 @@ def create_db():
 	c.execute("SOURCE sql/create-database_pyclub.sql")
 	c.close()
 	conn.close()
+
+def create_user(userdata):
+	"""Function creates user in database"""
+	c, conn = connection()
+	c.execute("INSERT INTO user VALUES(%s)", pymysql.escape_string(str(userdata)))
+	c.close()
+	conn.close()
+
+def create_event(eventdata):
+	"""Function creates event"""
+	c, conn = connection()
+	c.execute("INSERT INTO event VALUES(%s)", pymysql.escape_string(str(eventdata)))
+	c.close()
+	conn.close()
