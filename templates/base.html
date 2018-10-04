@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title> PyClub</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+  </head>
+  <body>
+
+  <div id="page">
+    <header>
+      <h1>PyClub</h1>
+      <nav>
+        <ul>
+          <li><a href="">Home</a></li>
+          <li><a href="">Contact</a></li>
+          <li><a href="">About</a></li>
+          <li><a href="">Register</a></li>
+          <li><a href="">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+    <aside>
+      {% block aside %}{% endblock %}
+    </aside>
+    <footer>
+      Hello
+    </footer>
+  </div>
+  </body>
+</html>
