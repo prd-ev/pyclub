@@ -2,3 +2,6 @@
 .vscode
 .pytest_cache
 __pycache__
+venv
+tests/__pycache__/*
+pyclub/__pycache__/*
