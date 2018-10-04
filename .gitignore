@@ -1,0 +1,4 @@
+# created by pytest automatically, do not change
+.vscode
+.pytest_cache
+__pycache__
