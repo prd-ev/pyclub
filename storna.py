@@ -1,12 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask.sessions import SessionInterface
-from lista import generator
-from name import imie
 
 
 app = Flask(__name__)
 app.secret_key = 'cokolwiek'
-users = {'iduser': 1, 'login': 'admin', 'password': 'admin'}
+users = {'iduser': 3, 'login': 'admin', 'password': 'admin'}
 attempted_password = None
 attempted_username = None
 
