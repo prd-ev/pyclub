@@ -1,17 +1,25 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask.sessions import SessionInterface
 from lista import generator
 from name import imie
-from Users import users
-from Passwords import passwords
+
+
 app = Flask(__name__)
+app.secret_key = 'cokolwiek'
+users = {'iduser': 1, 'login': 'admin', 'password': 'admin'}
+attempted_password = None
+attempted_username = None
 
 
 @app.route('/')
-def hello():
-    return 'Hello, World!'
+def index():
+    if 'ID' not in session:
+        return render_template('index.html')
+    else:
+        return render_template('profile.html', owner=session['ID'])
 
 
-@app.route('/login/', methods=["GET","POST"])
+@app.route('/login/', methods=["GET", "POST"])
 def login_page():
 
     if request.method == "POST":
@@ -19,42 +27,19 @@ def login_page():
         attempted_username = request.form['username']
         attempted_password = request.form['password']
 
-            #flash(attempted_username)
-            #flash(attempted_password)
+        if attempted_username == users['login'] and attempted_password == users['password']:
+            session['ID'] = users['iduser']
+            return redirect(url_for('index'))
 
-        if attempted_username in users and attempted_password in passwords:
-            return redirect(url_for('hi'))
-        else:
-            return redirect(url_for('loginerror'))
-    return render_template("login.html") 
-		
-@app.route('/register/', methods=["GET","POST"])
-def rejestracja():
+        return redirect(url_for('loginerror'))
 
-    error = ''
-    try:
-	
-        if request.method == "POST":
-		
-            attempted_username = request.form['username']
-            attempted_password = request.form['password']
-
-            #flash(attempted_username)
-            #flash(attempted_password)
-
-            users.append(attempted_username)
-            passwords.append(attempted_password)
-
-        return render_template("register.html", error = error)
-
-    except Exception as e:
-        #flash(e)
-        return render_template("register.html", error = error)
+    return render_template("login.html")
 
 
-@app.route('/app/')
-def hi():
-    return "Hello there"
+@app.route('/logout/')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 
 @app.route('/loginerror/')
