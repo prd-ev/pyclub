@@ -4,7 +4,7 @@ from flask.sessions import SessionInterface
 
 app = Flask(__name__)
 app.secret_key = 'cokolwiek'
-users = {'iduser': 3, 'login': 'admin', 'password': 'admin'}
+users = {'iduser': 1, 'login': 'admin', 'password': 'admin'}
 attempted_password = None
 attempted_username = None
 
