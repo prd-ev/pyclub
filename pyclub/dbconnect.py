@@ -104,6 +104,16 @@ class User(dict):
 		return True
 	def get_id(self):
 		return unicode(self['iduser'])
+	def id(self):
+		c, conn = connection()
+		iduser = c.execute('SELECT iduser FROM user WHERE ', self)
+		c.close()
+		conn.close()
+		return iduser
+		
+user = User(first_name='Maria')
+
+print(user.id)
 
 def get_organization(organizationkey):
 	c, conn = connection()
@@ -138,5 +148,11 @@ def get_event_membership(membershipdata):
 def get_club_membership(membershipdata):
 	c, conn = connection()
 	c.execute('SELECT * FROM club_membership WHERE user_id=%s or club_id=%s', (escape_string(membershipdata), escape_string(membershipdata)))
+	c.close()
+	conn.close()
+
+def confirm_email():
+	c, conn = connection()
+	c.execute('INSERT INTO user (email_confirm) values (1)')
 	c.close()
 	conn.close()
