@@ -48,7 +48,7 @@ def create_club(info, organization_id):
 	c, conn = connection()
 	c.execute("INSERT INTO club (info, organization_id) VALUES"
 			  "(%s, %s)"
-			  , (escape_string(info), escape_string(organization_id))
+			  , (escape_string(info), escape_string(str(organization_id)))
 	)
 	conn.commit()
 	c.close()
@@ -59,17 +59,17 @@ def create_event(date, info, club_id):
 	c, conn = connection()
 	c.execute("INSERT INTO event (date, info, club_id) VALUES"
 			  "(%s, %s)"
-			  , (escape_string(date), escape_string(info), escape_string(club_id))
+			  , (escape_string(date), escape_string(info), escape_string(str(club_id)))
 	)
 	conn.commit()
 	c.close()
 	conn.close()
 
-def create_event_membership(userid, eventid, club_event):
+def create_event_membership(userid, eventid, own_clubid):
 	c, conn = connection()
-	c.execute('INSERT INTO event_membership (user_id, event_id, event_club_idclub VALUES'
+	c.execute('INSERT INTO event_membership (user_id, event_id, own_club_id VALUES'
 			  '(%s, %s, %s)' 
-			  , (escape_string(userid), escape_string(eventid), escape_string(club_event))
+			  , (escape_string(str(userid)), escape_string(str(eventid)), escape_string(str(own_clubid)))
 	)
 	conn.commit()
 	c.close()
@@ -79,7 +79,7 @@ def create_club_membership(userid, clubid):
 	c, conn = connection()
 	c.execute('INSERT INTO club_membership (user_id, club_id) VALUES'
 			  '(%s, %s)'
-			  , (escape_string(userid), escape_string(clubid))
+			  , (escape_string(str(userid)), escape_string(str(clubid)))
 	)	
 	conn.commit()
 	c.close()
@@ -88,7 +88,7 @@ def create_club_membership(userid, clubid):
 def get_user(userkey):
 	"""Function takes userid and returns dict with data from database"""
 	c, conn = connection()
-	c.execute("SELECT * FROM user WHERE iduser=%s or email=%s", (escape_string(userkey), escape_string(userkey)))
+	c.execute("SELECT * FROM user WHERE iduser=%s or email=%s", (escape_string(str(userkey)), escape_string(str(userkey))))
 	user_data = User()
 	user_data.update(c.fetchone())
 	c.close()
@@ -110,46 +110,46 @@ class User(dict):
 		c.close()
 		conn.close()
 		return iduser
-		
-user = User(first_name='Maria')
-
-print(user.id)
 
 def get_organization(organizationkey):
 	c, conn = connection()
-	c.execute("SELECT * FROM organization WHERE idorganization=%s or name=%s", (escape_string(organizationkey), escape_string(organizationkey)))
-	organization_data = (c.fetchone())
+	c.execute("SELECT * FROM organization WHERE idorganization=%s or name=%s", (escape_string(str(organizationkey)), escape_string(organizationkey)))
+	organization_data = c.fetchone()
 	c.close()
 	conn.close()
 	return organization_data
 
 def get_club(clubid):
 	c, conn = connection()
-	c.execute("SELECT * FROM club WHERE idclub=%s", (escape_string(clubid)))
-	club_data = (c.fetchone())
+	c.execute("SELECT * FROM club WHERE idclub=%s", (escape_string(str(clubid))))
+	club_data = c.fetchone()
 	c.close()
 	conn.close()
 	return club_data
 
 def get_event(eventid):
 	c, conn = connection()
-	c.execute("SELECT * FROM event WHERE idevent=%s", (escape_string(eventid)))
-	event_data = (c.fetchone())
+	c.execute("SELECT * FROM event WHERE idevent=%s", (escape_string(str(eventid))))
+	event_data = c.fetchone()
 	c.close()
 	conn.close()
 	return event_data
 
 def get_event_membership(membershipdata):
 	c, conn = connection()
-	c.execute('SELECT * FROM event_membership WHERE user_id=%s or event_id=%s or event_club_id=%s', (escape_string(membershipdata), escape_string(membershipdata), escape_string(membershipdata)))
+	c.execute('SELECT * FROM event_membership WHERE user_id=%s or event_id=%s or event_club_id=%s', (escape_string(str(membershipdata)), escape_string(str(membershipdata)), escape_string(str(membershipdata))))
+	membershipdata = c.fetchall()
 	c.close()
 	conn.close()
+	return membershipdata
 
 def get_club_membership(membershipdata):
 	c, conn = connection()
-	c.execute('SELECT * FROM club_membership WHERE user_id=%s or club_id=%s', (escape_string(membershipdata), escape_string(membershipdata)))
+	c.execute('SELECT * FROM club_membership WHERE user_id=%s or club_id=%s', (escape_string(str(membershipdata)), escape_string(str(membershipdata))))
+	membershipdata = c.fetchall()
 	c.close()
 	conn.close()
+	return membershipdata
 
 def confirm_email():
 	c, conn = connection()
