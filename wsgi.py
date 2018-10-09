@@ -8,8 +8,6 @@ from pyclub.dbconnect import *
 app = Flask(__name__)
 app.secret_key = 'cokolwiek'
 users = {'iduser': 1, 'email': 'admin@gmail.com', 'login': 'admin', 'password': 'admin'}
-attempted_password = None
-attempted_username = None
 
 
 @app.route('/')
@@ -37,7 +35,7 @@ def login_page():
     return render_template("login.html")
 
 
-@app.route('/database/', methods=["GET", "POST"])
+@app.route('/database/')
 def database():
     user = str(get_user(3))
     return user

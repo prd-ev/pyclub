@@ -13,13 +13,8 @@ def create_db():
 
 def connection():
 	conn = pymysql.connect(host='localhost',
-<<<<<<< HEAD
 			       user='kostek',
 			       password='kostek',
-=======
-			       user='root',
-			       password='',
->>>>>>> origin/feature/db-handlers
 			       db='pyclub',
 			       charset='utf8mb4',
 			       cursorclass=pymysql.cursors.DictCursor)
