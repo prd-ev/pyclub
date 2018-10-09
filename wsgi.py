@@ -40,6 +40,24 @@ def database():
     user = str(get_user(3))
     return user
 
+@app.route('/register/', methods=["GET","POST"])
+def register():
+
+    if request.method == "POST":
+
+        new_first_name = request.form['first_name']
+        new_last_name = request.form['last_name']
+        new_email = request.form['email']
+        new_password = request.form['password']
+        if new_first_name and new_last_name and new_email and new_password:
+            create_user(new_first_name, new_last_name, new_email, new_password)
+        return redirect(url_for("index"))
+    return render_template("register.html")
+
+@app.route('/hello/', methods=["GET","POST"])
+def hello():
+    return '123'
+
 
 
 @app.route('/logout/')
