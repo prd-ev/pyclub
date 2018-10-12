@@ -4,8 +4,7 @@ __author__ = "Tomasz Lakomy"
 
 def connection():
 	conn = pymysql.connect(host='localhost',
-			       user='kostek',
-			       password='kostek',
+			       user='root',
 			       db='pyclub',
 			       charset='utf8mb4',
 			       cursorclass=pymysql.cursors.DictCursor)
@@ -28,3 +27,12 @@ def create_db():
 	c.execute("SOURCE sql/create-database_pyclub.sql")
 	c.close()
 	conn.close()
+
+def get_user_name(email):
+	"""Function takes email and returns name"""
+	c, conn = connection()
+	c.execute("SELECT first_name FROM user WHERE email=%s", pymysql.escape_string(str(email)))
+	user_data = c.fetchone()
+	c.close()
+	conn.close()
+	return user_data

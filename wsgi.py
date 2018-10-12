@@ -3,13 +3,16 @@ from flask.sessions import SessionInterface
 import pymysql
 import pyclub
 from pyclub.dbconnect import *
+from flask_mail import Mail, Message
 
 
 app = Flask(__name__)
+mail = Mail(app)
 app.secret_key = 'cokolwiek'
 users = {'iduser': 1, 'email': 'admin@gmail.com', 'login': 'admin', 'password': 'admin'}
 attempted_password = None
 attempted_username = None
+
 
 
 @app.route('/')
@@ -53,6 +56,7 @@ def logout():
 @app.route('/loginerror/')
 def loginerror():
     return render_template("loginerror.html")
+
 
 
 if __name__ == "__main__":
