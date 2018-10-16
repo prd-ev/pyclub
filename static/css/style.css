@@ -1,0 +1,127 @@
+/* global */
+
+body {
+    font-family: sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    padding: 0;
+    margin: 0;
+    background-color: #2A2D25;
+    color: #ffffff;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.button {
+    width: 100px;
+    height: 10px;
+}
+
+.forms {
+    width: 100px;
+    height: 510px;
+    
+}
+
+/* header */
+
+header {
+    background: #C0507B;
+    color: #ffffff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #ffffff 3px solid;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+header a {
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+header li {
+    float: left;
+    display: inline;
+    padding: 0 20px 0px 20px;
+}
+
+header #brand {
+    float: left;
+}
+
+header #brand h1 {
+    margin: 0;
+}
+
+header nav {
+    float: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* showcase */
+
+#showcase {
+    min-height: 500px;
+    background: url(../images/webdevelop.jpg) no-repeat -100px -100px;
+    text-align: center;
+    color: #ffffff;
+    border-bottom: #ffffff 3px solid;
+}
+
+#showcase h1 {
+    margin-top: 100px;
+    font-size: 100px;
+    margin-bottom: 0px;
+}
+
+#showcase p {
+    margin-top: 0px;
+    font-size: 50px;
+}
+
+/* boxes */
+
+#boxes {
+    margin-top: 20px;
+}
+
+#boxes .box {
+    float: left;
+    max-width: 30%;
+    padding: 10px;
+    text-align: center;
+}
+
+#boxes .box img {
+    width: 60px;
+}
+
+.linkswhite {
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+/* footer */
+
+footer {
+    background-color: #C0507B;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    border-top: #ffffff 3px solid;
+    border-bottom: #ffffff 3px solid;
+}
+
+
