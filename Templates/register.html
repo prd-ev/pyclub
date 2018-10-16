@@ -1,0 +1,18 @@
+{% extends "_base.html" %}
+{% block title %}
+PyClub | Rejestracja 
+{% endblock %}
+{% block section %}
+<div class="container">
+    <div class="forms">
+        <form>
+            <input class="form", type="text", name="email", placeholder="Email">
+            <input class="form", type="text", name="password", placeholder="hasło">
+            <input class="form", type="text", name="password-secondary", placeholder="hasło ponownie">
+            <input class="form", type="text", name="name", placeholder="Imię">
+            <input class="form", type="text", name="last_name", placeholder="Nazwisko">
+            <input class="button" , type="button", name="submit", value="Zarejestruj">
+        </form>
+    </div>
+</div>
+{% endblock %}
