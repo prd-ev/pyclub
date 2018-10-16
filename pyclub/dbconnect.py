@@ -83,7 +83,7 @@ def create_club_membership(userid, clubid):
 	c.execute('INSERT INTO club_membership (user_id, club_id) VALUES'
 			  '(%s, %s)'
 			  , (escape_string(str(userid)), escape_string(str(clubid)))
-	)	
+	)
 	conn.commit()
 	c.close()
 	conn.close()
