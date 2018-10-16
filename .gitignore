@@ -1,4 +1,7 @@
+# created by pytest automatically, do not change
+.vscode
+.pytest_cache
+__pycache__
 venv
 tests/__pycache__/*
 pyclub/__pycache__/*
-.vscode
