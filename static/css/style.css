@@ -17,14 +17,35 @@ body {
 }
 
 .button {
-    width: 100px;
-    height: 10px;
+    width: 307px;
+    height: 40px;
+    margin-top: 7px;
+    background-color: #B3F34D;
+    border: none;
+}
+
+.formsbox {
+    margin-top:60px;
+    margin-bottom:60px;
+    text-align: center
 }
 
 .forms {
-    width: 100px;
-    height: 510px;
-    
+    background-color: #ffffff;
+    width: 500px;
+    height: 500px;
+}
+
+.form {
+    width: 300px;
+    height: 30px;
+    margin: 10px;
+    border-color: #B3F34D;
+}
+
+.forms h1{
+    color: black;
+    text-align: center;
 }
 
 /* header */
