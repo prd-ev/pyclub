@@ -20,18 +20,20 @@ body {
     width: 307px;
     height: 40px;
     margin-top: 7px;
-    background-color: #B3F34D;
+    background-color: #DABDAB;
+    font-size: 20px;
+    color: white;
     border: none;
 }
 
 .formsbox {
     margin-top:60px;
     margin-bottom:60px;
-    text-align: center
+    text-align: center;
 }
 
 .forms {
-    background-color: #ffffff;
+    background-color: #2A2D25;
     width: 500px;
     height: 500px;
 }
@@ -40,11 +42,12 @@ body {
     width: 300px;
     height: 30px;
     margin: 10px;
-    border-color: #B3F34D;
+    border: none;
+    font-size:20px;
 }
 
 .forms h1{
-    color: black;
+    color: #ffffff;
     text-align: center;
 }
 

@@ -8,16 +8,17 @@ PyClub | Rejestracja
     <div class="forms">
         <div class="container">
         <h1>Zarejestruj się:</h1>
-        <form>
+        <form action="http://127.0.0.1:5000/register/" method="POST">
             <input class="form", type="text", name="email", placeholder="Email">
             <input class="form", type="text", name="password", placeholder="hasło">
-            <input class="form", type="text", name="password-secondary", placeholder="hasło ponownie">
+            <input class="form", type="text", name="password_confirm", placeholder="hasło ponownie">
             <input class="form", type="text", name="name", placeholder="Imię">
             <input class="form", type="text", name="last_name", placeholder="Nazwisko">
-            <input class="button" , type="button", name="submit", value="Zarejestruj">
+            <input class="button" , type="submit", name="submit", value="Zarejestruj">
         </form>
         </div>
     </div>
     </div>
+
 </div>
 {% endblock %}
