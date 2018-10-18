@@ -181,15 +181,3 @@ def confirm_email(userid):
 	c.execute('UPDATE user SET email_confirm=1 WHERE iduser=%s', escape_string(str(userid)))
 	c.close()
 	conn.close()
-
-
-def add_user(first_name, last_name, email, password):
-	"""Function creates user"""
-	c, conn = connection()
-	c.execute("INSERT INTO user (first_name, last_name, email, password) VALUES"
-			"(%s, %s, %s, %s)"
-			, (escape_string(first_name), escape_string(last_name), escape_string(email), escape_string(password))
-	)
-	conn.commit()
-	c.close()
-	conn.close()
