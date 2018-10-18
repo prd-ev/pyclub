@@ -149,7 +149,7 @@ def get_event_membership(membershipdata):
 	c.close()
 	conn.close()
 	return membershipdata
-	
+
 def get_userevent_membership(membershipdata):
 	c, conn = connection()
 	c.execute('SELECT * FROM event_membership WHERE user_id=%s', (escape_string(str(membershipdata))))
