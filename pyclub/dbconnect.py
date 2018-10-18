@@ -70,7 +70,7 @@ def create_event_membership(userid, eventid): #??????
 	'''Function takes user id, event id and club which is owner of the event and assigns user to event'''
 	c, conn = connection()
 	c.execute('INSERT INTO event_membership (user_id, event_id) VALUES'
-			  '(%s, %s)' 
+			  '(%s, %s)'
 			  , (escape_string(str(userid)), escape_string(str(eventid)))
 	)
 	conn.commit()
@@ -149,7 +149,7 @@ def get_event_membership(membershipdata):
 	c.close()
 	conn.close()
 	return membershipdata
-	
+
 def get_userevent_membership(membershipdata):
 	c, conn = connection()
 	c.execute('SELECT * FROM event_membership WHERE user_id=%s', (escape_string(str(membershipdata))))
