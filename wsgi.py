@@ -1,4 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, session, redirect, url_for
+from pyclub.dbconnect import create_user, get_user
+from werkzeug.security import generate_password_hash
+
 
 app = Flask(__name__)
 
@@ -6,10 +9,6 @@ app = Flask(__name__)
 def index_page():
     return render_template("index.html")
 
-
-@app.route("/register/")
-def register_page():
-    return render_template("register.html")
 
 
 @app.route("/login/")
@@ -19,24 +18,29 @@ def login_page():
 
 @app.route('/database/')
 def database():
-    user = str(get_user(3))
+    user = get_user(12)
     return user
 
-@app.route('/register/', methods=["GET","POST"])
-def register():
-
+@app.route("/register/", methods = ["POST", "GET"])
+def register_page():
+    error_message = None
     if request.method == "POST":
-
-        new_first_name = request.form['first_name']
-        new_last_name = request.form['last_name']
         new_email = request.form['email']
         new_password = request.form['password']
-        if new_first_name and new_last_name and new_email and new_password:
-            create_user(new_first_name, new_last_name, new_email, new_password)
-        return redirect(url_for("index"))
-    return render_template("register.html")
+        new_password_confirm = request.form['password_confirm']
+        new_first_name = request.form['name']
+        new_last_name = request.form['last_name']
 
-@app.route('/hello/', methods=["GET","POST"])
+        if new_email and new_password and new_first_name and new_last_name and new_password == new_password_confirm:
+            new_password = generate_password_hash(new_password)
+            create_user(new_first_name, new_last_name, new_email, new_password)
+        elif new_password != new_password_confirm:
+            error_message = "Hasła muszą się zgadzać"
+        else:
+            error_message = "Uzupełnij wszystkie pola"
+    return render_template("register.html", error = error_message)
+
+@app.route('/hello/')
 def hello():
     return '123'
 
