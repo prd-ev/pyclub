@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, session, redirect, url_for
-from pyclub.dbconnect import create_user, get_user
+from flask import Flask, render_template, request
+from pyclub.dbconnect import create_user
 from werkzeug.security import generate_password_hash
-
 
 app = Flask(__name__)
 
