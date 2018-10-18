@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from pyclub.dbconnect import create_user
+from pyclub.dbconnect import *
 from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
@@ -18,7 +18,6 @@ def register_page():
         new_password_confirm = request.form['password_confirm']
         new_first_name = request.form['name']
         new_last_name = request.form['last_name']
-
         if new_email and new_password and new_first_name and new_last_name and new_password == new_password_confirm:
             new_password = generate_password_hash(new_password)
             create_user(new_first_name, new_last_name, new_email, new_password)
@@ -42,6 +41,14 @@ def contact_page():
 @app.route("/about/")
 def about_page():
     return render_template("about.html")
+
+
+@app.route("/test/")
+def test():
+    user = User({"first_name":"asd"})
+    ID_new = user.get_id
+    return ID_new
+
 
 
 if __name__ == "__main__":
