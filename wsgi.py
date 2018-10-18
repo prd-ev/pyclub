@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from pyclub.dbconnect import create_user
 from werkzeug.security import generate_password_hash
+import CONFIG 
 
 app = Flask(__name__)
 
@@ -45,4 +46,4 @@ def about_page():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="127.0.0.1")
+    app.run(debug=CONFIG.DEBUG, host=CONFIG.HOST, port=CONFIG.PORT)
