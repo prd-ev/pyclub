@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect, flash
 from pyclub.dbconnect import *
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 
@@ -10,8 +11,9 @@ def index_page():
 
 @app.route("/register/", methods = ["POST", "GET"])
 def register_page():
+    error_message = None
     if request.method == "POST":
-
+    
         new_email = request.form['email']
         new_password = request.form['password']
         new_password_confirm = request.form['password_confirm']
@@ -19,8 +21,13 @@ def register_page():
         new_last_name = request.form['last_name']
 
         if new_email and new_password and new_first_name and new_last_name and new_password == new_password_confirm:
+            new_password = generate_password_hash(new_password)
             add_user(new_first_name, new_last_name, new_email, new_password)
-    return render_template("register.html")
+        elif new_password != new_password_confirm:
+            error_message = "Hasła muszą się zgadzać"
+        else:
+            error_message = "Uzupełnij wszystkie pola"
+    return render_template("register.html", error = error_message)
 
 
 @app.route("/login/")

@@ -51,6 +51,14 @@ body {
     text-align: center;
 }
 
+/* errormessage */
+
+#errormessage {
+    font-size: 15px;
+    color: orange;
+    
+}
+
 /* header */
 
 header {
