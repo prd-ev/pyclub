@@ -10,17 +10,6 @@ def index_page():
     return render_template("index.html")
 
 
-
-@app.route("/login/")
-def login_page():
-    return render_template("login.html")
-
-
-@app.route('/database/')
-def database():
-    user = get_user(12)
-    return user
-
 @app.route("/register/", methods = ["POST", "GET"])
 def register_page():
     error_message = None
@@ -40,22 +29,21 @@ def register_page():
             error_message = "Uzupełnij wszystkie pola"
     return render_template("register.html", error = error_message)
 
-@app.route('/hello/')
-def hello():
-    return '123'
+
+@app.route("/login/")
+def login_page():
+    return render_template("login.html")
 
 
-
-@app.route('/logout/')
-def logout():
-    session.clear()
-    return redirect(url_for('index'))
-
+@app.route("/contact/")
+def contact_page():
+    return render_template("contact.html")
 
 
 @app.route("/about/")
 def about_page():
     return render_template("about.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="127.0.0.1")
