@@ -1,23 +1,6 @@
 from flask import Flask, render_template
 
 app = Flask(__name__)
-<<<<<<< HEAD
-app.secret_key = 'cokolwiek'
-users = {'iduser': 1, 'email': 'admin@gmail.com', 'login': 'admin', 'password': 'admin'}
-
-
-@app.route('/')
-def index():
-    if 'ID' not in session:
-        return render_template('index.html')
-    else:
-        return render_template('profile.html', owner=session['ID'])
-
-
-@app.route('/login/', methods=["GET", "POST"])
-def login_page():
-=======
->>>>>>> master
 
 @app.route("/")
 def index_page():
@@ -34,7 +17,6 @@ def login_page():
     return render_template("login.html")
 
 
-<<<<<<< HEAD
 @app.route('/database/')
 def database():
     user = str(get_user(3))
@@ -65,11 +47,6 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-=======
-@app.route("/contact/")
-def contact_page():
-    return render_template("contact.html")
->>>>>>> master
 
 
 @app.route("/about/")
