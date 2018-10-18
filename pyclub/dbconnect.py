@@ -66,7 +66,7 @@ def create_event(date, info, club_id):
 	c.close()
 	conn.close()
 
-def create_event_membership(userid, eventid): #??????
+def create_event_membership(userid, eventid):
 	'''Function takes user id, event id and club which is owner of the event and assigns user to event'''
 	c, conn = connection()
 	c.execute('INSERT INTO event_membership (user_id, event_id) VALUES'
@@ -141,39 +141,39 @@ def get_event(eventid):
 	conn.close()
 	return event_data
 
-def get_event_membership(membershipdata):
+def get_event_membership(eventid):
 	'''Function takes userid or eventid and returns event membership'''
 	c, conn = connection()
-	c.execute('SELECT * FROM event_membership WHERE event_id=%s', (escape_string(str(membershipdata))))
-	membershipdata = c.fetchall()
+	c.execute('SELECT * FROM event_membership WHERE event_id=%s', (escape_string(str(eventid))))
+	eventid = c.fetchall()
 	c.close()
 	conn.close()
-	return membershipdata
+	return eventid
 
-def get_userevent_membership(membershipdata):
+def get_user_to_event_membership(userid):
 	c, conn = connection()
-	c.execute('SELECT * FROM event_membership WHERE user_id=%s', (escape_string(str(membershipdata))))
-	membershipdata = c.fetchall()
+	c.execute('SELECT * FROM event_membership WHERE user_id=%s', (escape_string(str(userid))))
+	userid = c.fetchall()
 	c.close()
 	conn.close()
-	return membershipdata
+	return userid
 
-def get_club_membership(membershipdata):
+def get_club_membership(clubid):
 	'''Function takes clubid and returns club membership'''
 	c, conn = connection()
-	c.execute('SELECT * FROM club_membership WHERE club_id=%s', (escape_string(str(membershipdata))))
-	membershipdata = c.fetchall()
+	c.execute('SELECT * FROM club_membership WHERE club_id=%s', (escape_string(str(clubid))))
+	clubid = c.fetchall()
 	c.close()
 	conn.close()
-	return membershipdata
+	return clubid
 
-def get_userclub_membership(membershipdata):
+def get_user_to_club_membership(userid):
 	c, conn = connection()
-	c.execute('SELECT * FROM club_membership WHERE user_id=%s', (escape_string(str(membershipdata))))
-	membershipdata = c.fetchall()
+	c.execute('SELECT * FROM club_membership WHERE user_id=%s', (escape_string(str(userid))))
+	userid = c.fetchall()
 	c.close()
 	conn.close()
-	return membershipdata
+	return userid
 
 def confirm_email(userid):
 	'''Function confirms user's mail'''
