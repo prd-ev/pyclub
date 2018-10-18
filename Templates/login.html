@@ -1,41 +1,15 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Flask Template Example</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <style type="text/css">
-        .container {
-            max-width: 500px;
-            padding-top: 100px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class="flashes">
-            {% for message in messages %}
-            <li>{{message}}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
-        <form action="/login/" method="POST">
-            email:<br>
-            <input type="email" name="email" placeholder="user@email.com">
-            <br>
-            password:<br>
-            <input type="text" name="password" placeholder="Password">
-            <br><br>
-            <input type="submit" value="Submit">
+{% extends "_base.html" %}
+{% block title %}
+PyClub | Logowanie
+{% endblock %}
+{% block section %}
+<div class="container">
+    <div class="forms">
+        <form>
+            <input class="form", type="text", name="email", placeholder="Email">
+            <input class="form", type="text", name="password", placeholder="hasło">
+            <input class="button" , type="button", name="submit", value="Loguj">
         </form>
     </div>
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+</div>
+{% endblock %}
