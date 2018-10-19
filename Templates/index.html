@@ -6,7 +6,11 @@ PyClub | Główna
 <section id="showcase">
     <div class="container">
         <h1>PyClub</h1>
-        <p>Wejdź na wyższy poziom</p>
+        {% if session_true != None %}
+        <div>
+            {{session_true}}
+        </div>
+        {% endif %}
     </div>
 </section>
 
