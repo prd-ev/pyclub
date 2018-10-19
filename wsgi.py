@@ -53,12 +53,18 @@ def logout():
 
 @app.route("/contact/")
 def contact_page():
-    return render_template("contact.html")
+    qwe = None
+    if 'ID' in session:
+        qwe = '123'
+    return render_template("contact.html", session_true = qwe)
 
 
 @app.route("/about/")
 def about_page():
-    return render_template("about.html")
+    qwe = None
+    if 'ID' in session:
+        qwe = '123'
+    return render_template("about.html", session_true = qwe)
 
 
 """@app.route('/test/')
