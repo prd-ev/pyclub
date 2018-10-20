@@ -17,6 +17,7 @@ def index_page():
 
 @app.route("/register/", methods = ["POST", "GET"])
 def register_page():
+    qwe = None
     error_message = None
     if request.method == "POST":
         new_email = request.form['email']
@@ -32,7 +33,7 @@ def register_page():
             error_message = "Hasła muszą się zgadzać"
         else:
             error_message = "Uzupełnij wszystkie pola"
-    return render_template("register.html", error = error_message)
+    return render_template("register.html", error = error_message, session_true = qwe)
 
 
 @app.route("/login/", methods = ["POST", "GET"])
@@ -52,7 +53,7 @@ def login_page():
                 session['ID'] = db_name
                 return redirect(url_for('index_page'))
             else:
-                error_message = "Hasło musi się zgadzać"
+                error_message = "Nieprawidłowe hasło"
     return render_template("login.html", session_true = qwe, error = error_message)
 
 @app.route('/logout/')
