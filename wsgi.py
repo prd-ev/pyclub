@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from flask.sessions import SessionInterface
 from pyclub.dbconnect import create_user, get_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from xd import session_id
 
 app = Flask(__name__)
 app.secret_key = 'cokolwiek'
@@ -38,16 +37,23 @@ def register_page():
 
 @app.route("/login/", methods = ["POST", "GET"])
 def login_page():
+    error_message = None
+    qwe = None
     if request.method == "POST":
         attempted_email = request.form['email']
         attempted_password = request.form['password']
         user_dict = get_user(str(attempted_email))
-        db_password = user_dict.get('password')
-        if db_password == attempted_password:
-            db_name = user_dict.get('first_name')
-            session['ID'] = db_name
-            return redirect(url_for('index_page'))
-    return render_template("login.html")
+        if user_dict == None:
+            error_message = 'Użytkownika nie ma w systemie'
+        else:
+            db_password = user_dict.get('password')
+            if db_password == attempted_password:
+                db_name = user_dict.get('first_name')
+                session['ID'] = db_name
+                return redirect(url_for('index_page'))
+            else:
+                error_message = "Hasło musi się zgadzać"
+    return render_template("login.html", session_true = qwe, error = error_message)
 
 @app.route('/logout/')
 def logout():
@@ -70,10 +76,6 @@ def about_page():
         qwe = session['ID']
     return render_template("about.html", session_true = qwe)
 
-@app.route('/test/')
-def test_page():
-    x = session_id('a@a')
-    return x
 
 
 if __name__ == "__main__":

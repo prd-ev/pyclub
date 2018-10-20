@@ -14,6 +14,11 @@ PyClub | Logowanie
                 <input class="button" , type="submit", name="submit", value="Zaloguj">
             </form>
             </div>
+            {% if error != None %}
+            <div id="errormessage">
+                {{error}}
+            </div>
+            {% endif %}
         </div>
         </div>
     </div>
