@@ -1,16 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask.sessions import SessionInterface
-from pyclub.dbconnect import *
-from werkzeug.security import generate_password_hash
+from pyclub.dbconnect import create_user, get_user
+from werkzeug.security import generate_password_hash, check_password_hash
+from xd import session_id
 
 app = Flask(__name__)
 app.secret_key = 'cokolwiek'
+
 
 @app.route("/")
 def index_page():
     qwe = None
     if 'ID' in session:
-        qwe = '123'
+        qwe = session['ID']
     return render_template("index.html", session_true = qwe)
 
 
@@ -23,8 +25,10 @@ def register_page():
         new_password_confirm = request.form['password_confirm']
         new_first_name = request.form['name']
         new_last_name = request.form['last_name']
-        if new_email and new_password and new_first_name and new_last_name and new_password == new_password_confirm:
+        if new_email and new_password and new_first_name and new_last_name and new_password == new_password_confirm and '@' in new_email:
             create_user(new_first_name, new_last_name, new_email, new_password)
+        elif '@' not in new_email:
+            error_message = "Email musi zawierać znak @"
         elif new_password != new_password_confirm:
             error_message = "Hasła muszą się zgadzać"
         else:
@@ -37,11 +41,11 @@ def login_page():
     if request.method == "POST":
         attempted_email = request.form['email']
         attempted_password = request.form['password']
-        test = get_user(str(attempted_email))
-        db_password = test.get('password')
-        db_id = test.get('iduser')
+        user_dict = get_user(str(attempted_email))
+        db_password = user_dict.get('password')
         if db_password == attempted_password:
-            session['ID'] = db_id
+            db_name = user_dict.get('first_name')
+            session['ID'] = db_name
             return redirect(url_for('index_page'))
     return render_template("login.html")
 
@@ -55,7 +59,7 @@ def logout():
 def contact_page():
     qwe = None
     if 'ID' in session:
-        qwe = '123'
+        qwe = session['ID']
     return render_template("contact.html", session_true = qwe)
 
 
@@ -63,14 +67,13 @@ def contact_page():
 def about_page():
     qwe = None
     if 'ID' in session:
-        qwe = '123'
+        qwe = session['ID']
     return render_template("about.html", session_true = qwe)
 
-
-"""@app.route('/test/')
-def test():
-"""
-
+@app.route('/test/')
+def test_page():
+    x = session_id('a@a')
+    return x
 
 
 if __name__ == "__main__":
