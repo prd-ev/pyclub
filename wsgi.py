@@ -10,8 +10,8 @@ app.secret_key = 'cokolwiek'
 @app.route("/")
 def index_page():
     qwe = None
-    if 'ID' in session:
-        qwe = session['ID']
+    if 'first_name' in session:
+        qwe = session['first_name']
     return render_template("index.html", session_true = qwe)
 
 
@@ -50,7 +50,9 @@ def login_page():
             db_password = user_dict.get('password')
             if db_password == attempted_password:
                 db_name = user_dict.get('first_name')
-                session['ID'] = db_name
+                session['first_name'] = db_name
+                db_id = user_dict.get('iduser')
+                session['ID'] = db_id
                 return redirect(url_for('index_page'))
             else:
                 error_message = "Nieprawidłowe hasło"
@@ -65,17 +67,29 @@ def logout():
 @app.route("/contact/")
 def contact_page():
     qwe = None
-    if 'ID' in session:
-        qwe = session['ID']
+    if 'first_name' in session:
+        qwe = session['first_name']
     return render_template("contact.html", session_true = qwe)
 
 
 @app.route("/about/")
 def about_page():
     qwe = None
-    if 'ID' in session:
-        qwe = session['ID']
+    if 'first_name' in session:
+        qwe = session['first_name']
     return render_template("about.html", session_true = qwe)
+
+@app.route("/profile/")
+def profile_page():
+    qwe = None
+    if 'first_name' in session:
+        qwe = session['first_name']
+        user_id = session['ID']
+        current_user_dict = get_user(str(user_id))
+        first_name = current_user_dict['first_name']
+        last_name = current_user_dict['last_name']
+        email = current_user_dict['email']
+    return render_template("profile.html", session_true = qwe, user_first_name = first_name, user_last_name = last_name, user_email = email)
 
 
 

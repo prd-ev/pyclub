@@ -1,0 +1,10 @@
+{% extends "_base.html" %}
+{% block title %}
+PyClub | {{user_first_name}}
+{% endblock %}
+{% block section %}
+<h1>Profil</h1>
+<p>Imię Użytkownika: {{user_first_name}}</p>
+<p>Nazwisko Użytkownika: {{user_last_name}}</p>
+<p>Email: {{user_email}}</p>
+{% endblock %}

@@ -8,6 +8,7 @@
         <meta name="keywords" content="klub, python, wydarzenia, poznań" />
         <meta name="description" content="Portal służący do zarządzaniem wydarzeniami i klubami" />
         <title>{% block title %}{%endblock%}</title>
+        <!--<link rel="icon" href="/static/images/zskalpha.png" type="image/x-icon">-->
 
         <link rel="stylesheet", href="/static/css/style.css" />
     </head>
@@ -32,6 +33,7 @@
                         <li><a href="/login/">Logowanie</a></li>
                         {% else %}
                         <li><a href='/logout/'>Wyloguj</a></li>
+                        <li><a href='/profile/'>Profil</a></li>
                         {% endif %}
 
                     </ul>
