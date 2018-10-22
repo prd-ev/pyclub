@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from pyclub.dbconnect import get_club, get_event, get_organization, get_user, get_club_membership, get_userclub_membership, get_event_membership, get_userevent_membership
+from pyclub.dbconnect import get_club, get_event, get_organization, get_user, get_club_membership, get_user_to_club_membership, get_event_membership, get_user_to_event_membership
 
 app = Flask(__name__)
 
