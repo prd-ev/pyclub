@@ -9,15 +9,15 @@ app.secret_key = 'cokolwiek'
 
 @app.route("/")
 def index_page():
-    qwe = None
+    logged_in = None
     if 'first_name' in session:
-        qwe = session['first_name']
-    return render_template("index.html", session_true = qwe)
+        logged_in = session['first_name']
+    return render_template("index.html", session_true = logged_in)
 
 
 @app.route("/register/", methods = ["POST", "GET"])
 def register_page():
-    qwe = None
+    logged_in = None
     error_message = None
     if request.method == "POST":
         new_email = request.form['email']
@@ -26,6 +26,7 @@ def register_page():
         new_first_name = request.form['name']
         new_last_name = request.form['last_name']
         if new_email and new_password and new_first_name and new_last_name and new_password == new_password_confirm and '@' in new_email:
+            new_password = generate_password_hash(new_password)
             create_user(new_first_name, new_last_name, new_email, new_password)
         elif '@' not in new_email:
             error_message = "Email musi zawierać znak @"
@@ -33,13 +34,13 @@ def register_page():
             error_message = "Hasła muszą się zgadzać"
         else:
             error_message = "Uzupełnij wszystkie pola"
-    return render_template("register.html", error = error_message, session_true = qwe)
+    return render_template("register.html", error = error_message, session_true = logged_in)
 
 
 @app.route("/login/", methods = ["POST", "GET"])
 def login_page():
     error_message = None
-    qwe = None
+    logged_in = None
     if request.method == "POST":
         attempted_email = request.form['email']
         attempted_password = request.form['password']
@@ -48,7 +49,7 @@ def login_page():
             error_message = 'Użytkownika nie ma w systemie'
         else:
             db_password = user_dict.get('password')
-            if db_password == attempted_password:
+            if check_password_hash(db_password, attempted_password):
                 db_name = user_dict.get('first_name')
                 session['first_name'] = db_name
                 db_id = user_dict.get('iduser')
@@ -56,7 +57,7 @@ def login_page():
                 return redirect(url_for('index_page'))
             else:
                 error_message = "Nieprawidłowe hasło"
-    return render_template("login.html", session_true = qwe, error = error_message)
+    return render_template("login.html", session_true = logged_in, error = error_message)
 
 @app.route('/logout/')
 def logout():
@@ -66,30 +67,30 @@ def logout():
 
 @app.route("/contact/")
 def contact_page():
-    qwe = None
+    logged_in = None
     if 'first_name' in session:
-        qwe = session['first_name']
-    return render_template("contact.html", session_true = qwe)
+        logged_in = session['first_name']
+    return render_template("contact.html", session_true = logged_in)
 
 
 @app.route("/about/")
 def about_page():
-    qwe = None
+    logged_in = None
     if 'first_name' in session:
-        qwe = session['first_name']
-    return render_template("about.html", session_true = qwe)
+        logged_in = session['first_name']
+    return render_template("about.html", session_true = logged_in)
 
 @app.route("/profile/")
 def profile_page():
-    qwe = None
+    logged_in = None
     if 'first_name' in session:
-        qwe = session['first_name']
+        logged_in = session['first_name']
         user_id = session['ID']
         current_user_dict = get_user(str(user_id))
         first_name = current_user_dict['first_name']
         last_name = current_user_dict['last_name']
         email = current_user_dict['email']
-    return render_template("profile.html", session_true = qwe, user_first_name = first_name, user_last_name = last_name, user_email = email)
+    return render_template("profile.html", session_true = logged_in, user_first_name = first_name, user_last_name = last_name, user_email = email)
 
 
 
