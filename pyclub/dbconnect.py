@@ -14,8 +14,8 @@ def create_db():
 def connection():
 	'''Function connects to database'''
 	conn = pymysql.connect(host='localhost',
-			       user='kostek',
-			       password='kostek',
+			       user='root',
+			       password='',
 			       db='pyclub',
 			       charset='utf8mb4',
 			       cursorclass=pymysql.cursors.DictCursor)
