@@ -27,7 +27,7 @@ def test_get_organization():
 
 def test_create_club():
 	create_club('fajny club',1)
-	
+
 def test_get_club():
 	club_data = get_club(1)
 	sql = {'idclub': 1, 'info': 'fajny club', 'organization_id': 1}

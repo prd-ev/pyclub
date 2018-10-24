@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask.sessions import SessionInterface
 from pyclub.dbconnect import create_user, get_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
