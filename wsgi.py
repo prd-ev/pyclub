@@ -44,7 +44,7 @@ def login_page():
         attempted_email = request.form['email']
         attempted_password = request.form['password']
         user_dict = get_user(str(attempted_email))
-        if user_dict == None:
+        if user_dict is None:
             error_message = 'Użytkownika nie ma w systemie'
         else:
             db_password = user_dict.get('password')
@@ -54,8 +54,7 @@ def login_page():
                 db_id = user_dict.get('iduser')
                 session['ID'] = db_id
                 return redirect(url_for('index_page'))
-            else:
-                error_message = "Nieprawidłowe hasło"
+            error_message = "Nieprawidłowe hasło"
     return render_template("login.html", session_true = logged_in, error = error_message)
 
 @app.route('/logout/')
