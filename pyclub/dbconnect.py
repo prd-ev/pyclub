@@ -183,8 +183,8 @@ def confirm_email(userid):
 	conn.close()
 	return event_data
 
-def get__all_emails():
-	'''Function takes clubid and returns club membership'''
+def get__all_emails():	
+	'''Function takes all emails and creates a list'''
 	c, conn = connection()
 	c.execute('SELECT email FROM user')
 	emails_dict = c.fetchall()
