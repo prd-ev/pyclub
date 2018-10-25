@@ -12,7 +12,7 @@ def create_db():
 	conn.close()
 
 def connection():
-	'''Function connects to database'''
+	"""Function connects to database"""
 	conn = pymysql.connect(host='localhost',
 			       user='tykaz',
 			       password='',
