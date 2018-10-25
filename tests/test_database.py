@@ -1,4 +1,4 @@
-from pyclub.dbconnect import create_db, create_user, create_organization, create_club, create_event,  get_user, get_club, get_organization, get_event
+from pyclub.dbconnect import create_user, create_organization, create_club, create_event,  get_user, get_club, get_organization, get_event
 
 #def test_create_db():
 #	create_db()
