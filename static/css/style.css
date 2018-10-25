@@ -17,13 +17,45 @@ body {
 }
 
 .button {
-    width: 100px;
-    height: 10px;
+    width: 307px;
+    height: 40px;
+    margin-top: 7px;
+    background-color: #DABDAB;
+    font-size: 20px;
+    color: white;
+    border: none;
+}
+
+.formsbox {
+    margin-top:60px;
+    margin-bottom:60px;
+    text-align: center;
 }
 
 .forms {
-    width: 100px;
-    height: 510px;
+    background-color: #2A2D25;
+    width: 500px;
+    height: 500px;
+}
+
+.form {
+    width: 300px;
+    height: 30px;
+    margin: 10px;
+    border: none;
+    font-size:20px;
+}
+
+.forms h1{
+    color: #ffffff;
+    text-align: center;
+}
+
+/* errormessage */
+
+#errormessage {
+    font-size: 15px;
+    color: orange;
     
 }
 
@@ -123,5 +155,3 @@ footer {
     border-top: #ffffff 3px solid;
     border-bottom: #ffffff 3px solid;
 }
-
-
