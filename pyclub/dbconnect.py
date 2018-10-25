@@ -26,8 +26,8 @@ def connection():
 def create_user(first_name, last_name, email, password):
 	"""Function creates user"""
 	c, conn = connection()
-	c.execute("INSERT INTO user (first_name, last_name, email, password) VALUES"
-			  "(%s, %s, %s, %s)"
+	c.execute("INSERT INTO user (first_name, last_name, email, password, email_confirm) VALUES"
+			  "(%s, %s, %s, %s, 0)"
 			  , (escape_string(first_name), escape_string(last_name), escape_string(email), escape_string(password))
 	)
 	conn.commit()
@@ -205,15 +205,19 @@ def get_user_to_club_membership(userid):
 	return userid
 
 def confirm_email(usermail):
-	"""Function confirms user's mail"""
+	'''Function confirms user's mail'''
 	c, conn = connection()
-	c.execute('UPDATE user SET email_confirm=1 WHERE email=%s', escape_string(str(usermail)))
+	c.execute('UPDATE user SET email_confirm=1 WHERE email=%s', (escape_string(usermail)))
+	conn.commit()
 	c.close()
 	conn.close()
 
+if __name__ == '__main__':
+	create_user("Adam", "Korba", "korba.adam@gmail.com", "1234")
+
 def get_event_next_week():
 	"""Functions shows events from the next week
-	
+
 			returns: list with events planned to next week
 	"""
 	c, conn = connection()
@@ -238,7 +242,7 @@ def get_event_current_week():
 	c.close()
 	conn.close()
 	return event_data
-print(get_event_current_week())
+
 def get_event_next_month():
 	"""Functions shows events from the current week
 	
