@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for
 from pyclub.dbconnect import create_user, confirm_email
 from werkzeug.security import generate_password_hash
-from emailconfirmation import generate_confirmation_token, confirm_token, send_email_authentication
+from emailconfirmation import confirm_token, send_email_authentication
 from main import app
 
 @app.route("/")
