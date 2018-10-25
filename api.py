@@ -7,7 +7,6 @@ app = Flask(__name__)
 def hello():
     return 'Hello, World!'
 
-
 @app.route('/app/')
 def hi():
     return "Hello there"
@@ -40,7 +39,7 @@ def apiclubmembership(membershipdata):
 
 @app.route('/api/userclub_membership/<membershipdata>')
 def apiuserclubmembership(membershipdata):
-    club_membership = get_userclub_membership(membershipdata)
+    club_membership = get_user_to_club_membership(membershipdata)
     return jsonify(club_membership)
 
 @app.route('/api/event_membership/<membershipdata>')
@@ -50,7 +49,7 @@ def apieventmembership(membershipdata):
 
 @app.route('/api/userevent_membership/<membershipdata>')
 def apiuserevent_membership(membershipdata):
-    userevent_membership = get_userevent_membership(membershipdata)
+    userevent_membership = get_user_to_event_membership(membershipdata)
     return jsonify(userevent_membership)
 
 if __name__ == "__main__":

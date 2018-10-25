@@ -1,11 +1,8 @@
 import pytest
-from pyclub.dbconnect import connection, create_db, create_user, create_organization, create_club, create_event,  get_user, get_club, get_organization, get_event
+from pyclub.dbconnect import create_db, create_user, create_organization, create_club, create_event,  get_user, get_club, get_organization, get_event
 
-#def test_create_db():
-#	create_db()
-
-#def test_connection():
-#	connection()
+def test_create_db():
+	create_db()
 
 def test_create_user():
 	create_user('Firstname','Test','email@email.com','haslomaslo')
@@ -27,7 +24,7 @@ def test_get_organization():
 
 def test_create_club():
 	create_club('fajny club',1)
-	
+
 def test_get_club():
 	club_data = get_club(1)
 	sql = {'idclub': 1, 'info': 'fajny club', 'organization_id': 1}
