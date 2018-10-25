@@ -15,7 +15,7 @@ def create_db():
 def connection():
 	"""Function connects to database"""
 	conn = pymysql.connect(host='localhost',
-			       user='root',
+			       user='tykaz',
 			       password='',
 			       db='pyclub',
 			       charset='utf8mb4',
@@ -26,8 +26,8 @@ def connection():
 def create_user(first_name, last_name, email, password):
 	"""Function creates user"""
 	c, conn = connection()
-	c.execute("INSERT INTO user (first_name, last_name, email, password) VALUES"
-			  "(%s, %s, %s, %s)"
+	c.execute("INSERT INTO user (first_name, last_name, email, password, email_confirm) VALUES"
+			  "(%s, %s, %s, %s, 0)"
 			  , (escape_string(first_name), escape_string(last_name), escape_string(email), escape_string(password))
 	)
 	conn.commit()
@@ -213,16 +213,21 @@ def confirm_email(usermail):
 
 def get_event_next_week():
 	"""Functions shows events from the next week
-	
+
 			returns: list with events planned to next week
 	"""
+	today = datetime.today()
+	weekday = today.weekday()
+	days_to = 6 - weekday
+	start_time = today + timedelta(days=days_to)
+	end_time = start_time + timedelta(days=7)
 	c, conn = connection()
-	c.execute('SELECT idevent FROM event WHERE date= ') #??????????
+	c.execute('SELECT idevent FROM event WHERE date>%s and date<=%s', (start_time, end_time))
 	event_data = c.fetchall()
 	c.close()
 	conn.close()
 	return event_data
-
+print(get_event_next_week())
 def get_event_current_week():
 	"""Functions shows events from the current week
 	
@@ -230,15 +235,15 @@ def get_event_current_week():
 	"""
 	today = datetime.today()
 	weekday = today.weekday()
-	days_left = 7-weekday
+	days_left = 6-weekday
 	time = today + timedelta(days=days_left)
 	c, conn = connection()
-	c.execute('SELECT idevent FROM event WHERE date<=%s and date>%s', (time, today))
+	c.execute('SELECT idevent FROM event WHERE date<%s and date>%s', (time, today))
 	event_data = c.fetchall()
 	c.close()
 	conn.close()
 	return event_data
-print(get_event_current_week())
+
 def get_event_next_month():
 	"""Functions shows events from the current week
 	
