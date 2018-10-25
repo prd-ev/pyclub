@@ -205,11 +205,15 @@ def get_user_to_club_membership(userid):
 	return userid
 
 def confirm_email(usermail):
-	"""Function confirms user's mail"""
+	'''Function confirms user's mail'''
 	c, conn = connection()
-	c.execute('UPDATE user SET email_confirm=1 WHERE email=%s', escape_string(str(usermail)))
+	c.execute('UPDATE user SET email_confirm=1 WHERE email=%s', (escape_string(usermail)))
+	conn.commit()
 	c.close()
 	conn.close()
+
+if __name__ == '__main__':
+	create_user("Adam", "Korba", "korba.adam@gmail.com", "1234")
 
 def get_event_next_week():
 	"""Functions shows events from the next week
