@@ -2,7 +2,7 @@ from flask import render_template, request, url_for, redirect
 from pyclub.dbconnect import create_user, confirm_email
 from werkzeug.security import generate_password_hash
 from email_confirmation import confirm_token, send_email_authentication
-from main import app 
+from main import app
 from error_handlers import page_not_found, server_error
 
 @app.route("/")
@@ -28,7 +28,7 @@ def register_page():
         elif new_password != new_password_confirm:
             error_message = "Hasła muszą się zgadzać"
         else:
-            error_message = "Uzupełnij wszystkie pola" 
+            error_message = "Uzupełnij wszystkie pola"
     return render_template("register.html", error = error_message)
 
 
