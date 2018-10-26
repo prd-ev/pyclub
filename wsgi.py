@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for
 from pyclub.dbconnect import create_user, confirm_email
 from werkzeug.security import generate_password_hash
-from emailconfirmation import generate_confirmation_token, confirm_token, send_email_authentication, mail
+from emailconfirmation import confirm_token, send_email_authentication
 from main import app
 
 @app.route("/")
@@ -54,4 +54,4 @@ def activate_account(confirmation_token):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="127.0.0.1", port="5000")
+    app.run(host="127.0.0.1", port=5000)

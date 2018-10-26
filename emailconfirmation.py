@@ -17,7 +17,7 @@ def confirm_token(token):
             token,
             salt = "General Kenobi",
         )
-    except:
+    except Exception:
         return False
     return email
 
