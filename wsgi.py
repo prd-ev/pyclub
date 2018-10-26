@@ -3,6 +3,8 @@ from pyclub.dbconnect import create_user, confirm_email
 from werkzeug.security import generate_password_hash
 from email_confirmation import confirm_token, send_email_authentication
 from main import app
+import werkzeug
+from error_handlers import page_not_found
 
 @app.route("/")
 def index_page():
@@ -24,7 +26,6 @@ def register_page():
             create_user(new_first_name, new_last_name, new_email, new_password)
             send_email_authentication(new_email)
             return redirect(url_for('index_page'))
-
         elif new_password != new_password_confirm:
             error_message = "Hasła muszą się zgadzać"
         else:
@@ -47,20 +48,12 @@ def about_page():
     return render_template("about.html")
 
 
-@app.route("/notfound/")
-def not_found404():
-    return render_template("404notfound.html")
-
-
 @app.route("/activate/<confirmation_token>/")
 def activate_account(confirmation_token):
-    try:
         mail = confirm_token(confirmation_token)
         confirm_email(mail)
         return redirect(url_for('index_page'))
-    except Exception:
-        return redirect(url_for('not_found404'))
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000)
+    app.run(host="127.0.0.1", port=5000, debug=True)
