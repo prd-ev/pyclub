@@ -25,8 +25,8 @@ def connection():
 def create_user(first_name, last_name, email, password):
 	"""Function creates user"""
 	c, conn = connection()
-	c.execute("INSERT INTO user (first_name, last_name, email, password, email_confirm) VALUES"
-			  "(%s, %s, %s, %s, 0)"
+	c.execute("INSERT INTO user (first_name, last_name, email, password) VALUES"
+			  "(%s, %s, %s, %s)"
 			  , (escape_string(first_name), escape_string(last_name), escape_string(email), escape_string(password))
 	)
 	conn.commit()
@@ -175,10 +175,9 @@ def get_userclub_membership(membershipdata):
 	conn.close()
 	return membershipdata
 
-def confirm_email(usermail):
+def confirm_email(userid):
 	'''Function confirms user's mail'''
 	c, conn = connection()
-	c.execute('UPDATE user SET email_confirm=1 WHERE email=%s', (escape_string(usermail)))
-	conn.commit()
+	c.execute('UPDATE user SET email_confirm=1 WHERE iduser=%s', escape_string(str(userid)))
 	c.close()
 	conn.close()
