@@ -187,5 +187,9 @@ def confirm_email(usermail):
 =======
 
 if __name__ == '__main__':
+<<<<<<< HEAD
+	create_user("Adam", "Korba", "korba.adam@gmail.com", "1234")
+>>>>>>> parent of 2fa7443... Dziala
+=======
 	create_user("Adam", "Korba", "korba.adam@gmail.com", "1234")
 >>>>>>> parent of 2fa7443... Dziala

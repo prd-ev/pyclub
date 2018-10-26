@@ -36,5 +36,9 @@ def send_email_authentication(email):
 
 if __name__ == "__main__":
     token = generate_confirmation_token("korba.adam@gmail.com")
+<<<<<<< HEAD
+    print(confirm_token(token))
+>>>>>>> parent of 2fa7443... Dziala
+=======
     print(confirm_token(token))
 >>>>>>> parent of 2fa7443... Dziala
