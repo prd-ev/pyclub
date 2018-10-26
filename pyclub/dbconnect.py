@@ -231,7 +231,7 @@ def get_event_next_week():
 	c.close()
 	conn.close()
 	return event_data
-print(get_event_next_week())
+
 def get_event_current_week():
 	"""Functions shows events from the current week
 	
