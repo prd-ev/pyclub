@@ -7,5 +7,5 @@ app.config.update(
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
     MAIL_USERNAME = "pyclubpoznan@gmail.com",
-    MAIL_PASSWORD = "pyclub123"
+    MAIL_PASSWORD = ""
 )
