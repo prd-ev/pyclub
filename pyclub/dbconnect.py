@@ -181,10 +181,3 @@ def confirm_email(userid):
 	c.execute('UPDATE user SET email_confirm=1 WHERE iduser=%s', escape_string(str(userid)))
 	c.close()
 	conn.close()
-<<<<<<< HEAD
-=======
-
-if __name__ == '__main__':
-	create_user("Adam", "Korba", "korba.adam@gmail.com", "1234")
-	
->>>>>>> origin/Feature/layout

@@ -1,14 +1,8 @@
-from flask import Flask, render_template, request
-from pyclub.dbconnect import create_user
+from flask import render_template, request, url_for, redirect
+from pyclub.dbconnect import create_user, confirm_email
 from werkzeug.security import generate_password_hash
-<<<<<<< HEAD
-import CONFIG 
-
-app = Flask(__name__)
-=======
 from emailconfirmation import confirm_token, send_email_authentication
 from main import app
->>>>>>> origin/Feature/layout
 
 @app.route("/")
 def index_page():
@@ -28,12 +22,9 @@ def register_page():
         if new_email and new_password and new_first_name and new_last_name and new_password == new_password_confirm:
             new_password = generate_password_hash(new_password)
             create_user(new_first_name, new_last_name, new_email, new_password)
-<<<<<<< HEAD
             send_email_authentication(new_email)
             return redirect(url_for('index_page'))
 
-=======
->>>>>>> parent of 579dc4a... Add main with app, Handle email confirmation
         elif new_password != new_password_confirm:
             error_message = "Hasła muszą się zgadzać"
         else:
@@ -57,7 +48,6 @@ def about_page():
     return render_template("about.html")
 
 
-<<<<<<< HEAD
 @app.route("/notfound/")
 def not_found404():
     return render_template("404notfound.html")
@@ -76,12 +66,3 @@ def activate_account(confirmation_token):
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5000, debug=True)
 
-
-=======
-if __name__ == "__main__":
-<<<<<<< HEAD
-    app.run(debug=CONFIG.DEBUG, host=CONFIG.HOST, port=CONFIG.PORT)
->>>>>>> parent of 579dc4a... Add main with app, Handle email confirmation
-=======
-    app.run(host="127.0.0.1", port="5000")
->>>>>>> origin/Feature/layout
