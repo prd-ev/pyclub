@@ -84,7 +84,7 @@ def create_club_membership(userid, clubid):
 
 def del_user(userid):
 	"""Function takes user's id and deletes it from database
-		
+
 		tip: check dependencies before deleting
 	"""
 	c, conn = connection()
