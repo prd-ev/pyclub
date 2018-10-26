@@ -30,8 +30,3 @@ def send_email_authentication(email):
     msg.body = "Hello {0}!\nTo authenticate your email enter this link:\n {1}\n \nPyClub".format(get_user(email)['first_name'],
     activation_link)
     mail.send(msg)
-
-
-if __name__ == "__main__":
-    token = generate_confirmation_token("korba.adam@gmail.com")
-    print(confirm_token(token))

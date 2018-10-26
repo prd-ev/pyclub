@@ -182,7 +182,4 @@ def confirm_email(usermail):
 	conn.commit()
 	c.close()
 	conn.close()
-
-if __name__ == '__main__':
-	create_user("Adam", "Korba", "korba.adam@gmail.com", "1234")
 	
