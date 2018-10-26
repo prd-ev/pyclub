@@ -24,7 +24,7 @@ def connection():
 	return c, conn
 
 def create_user(first_name, last_name, email, password):
-	"""Function creates user"""
+	"""Function takes first name, last name, email and password and creates user in database"""
 	c, conn = connection()
 	c.execute("INSERT INTO user (first_name, last_name, email, password, email_confirm) VALUES"
 			  "(%s, %s, %s, %s, 0)"
@@ -35,7 +35,7 @@ def create_user(first_name, last_name, email, password):
 	conn.close()
 
 def create_organization(name, contact):
-	"""Function creates organization"""
+	"""Function takes name and contact and creates organization in database"""
 	c, conn = connection()
 	c.execute("INSERT INTO organization (name, contact) VALUES"
 			  "(%s, %s)"
@@ -46,7 +46,7 @@ def create_organization(name, contact):
 	conn.close()
 
 def create_club(info, organization_id):
-	"""Function creates club"""
+	"""Function takes info and organization id, creates and assigns club to organization in database"""
 	c, conn = connection()
 	c.execute("INSERT INTO club (info, organization_id) VALUES"
 			  "(%s, %s)"
@@ -57,7 +57,7 @@ def create_club(info, organization_id):
 	conn.close()
 
 def create_event(date, info, club_id):
-	"""Function creates event"""
+	"""Function takes date (yyyy-mm-dd) information and club id, creates event and assigns to club in database"""
 	c, conn = connection()
 	c.execute("INSERT INTO event (date, info, club_id) VALUES"
 			  "(%s, %s, %s)"
@@ -79,7 +79,7 @@ def create_event_membership(userid, eventid):
 	conn.close()
 
 def create_club_membership(userid, clubid):
-	"""Function takes user id and club id and assigns user to that club"""
+	"""Function takes user id, club id and assigns user to that club"""
 	c, conn = connection()
 	c.execute('INSERT INTO club_membership (user_id, club_id) VALUES'
 			  '(%s, %s)'
@@ -90,6 +90,10 @@ def create_club_membership(userid, clubid):
 	conn.close()
 
 def del_user(userid):
+	"""Function takes user's id and deletes it from database
+		
+		tip: check dependencies before deleting
+	"""
 	c, conn = connection()
 	c.execute('DELETE from user WHERE iduser=%s;', (escape_string(str(userid))))
 	conn.commit()
@@ -97,6 +101,10 @@ def del_user(userid):
 	conn.close()
 
 def del_organization(organizationid):
+	"""Function takes organization's id and deletes it from database
+	
+		tip: check dependencies before deleting
+	"""
 	c, conn = connection()
 	c.execute('DELETE from organization WHERE idorganization=%s;', (escape_string(str(organizationid))))
 	conn.commit()
@@ -104,6 +112,10 @@ def del_organization(organizationid):
 	conn.close()
 
 def del_club(clubid):
+	"""Function takes club's id and deletes it from database
+	
+		tip: check dependencies before deleting
+	"""
 	c, conn = connection()
 	c.execute('DELETE from club WHERE idclub=%s;', (escape_string(str(clubid))))
 	conn.commit()
@@ -111,6 +123,10 @@ def del_club(clubid):
 	conn.close()
 
 def del_event(eventid):
+	"""Function takes event's id and deletes it from database
+	
+		tip: check dependencies before deleting
+	"""
 	c, conn = connection()
 	c.execute('DELETE from event WHERE idevent=%s;', (escape_string(str(eventid))))
 	conn.commit()
@@ -143,10 +159,19 @@ class User(dict):
 	def userid(self, userkey):
 		self.id = userkey
 
-def get_organization(organizationkey):
-	"""Function returns organization data"""
+def get_organization(organizationname):
+	"""Function takes organization name and returns dict with organization's data"""
 	c, conn = connection()
-	c.execute("SELECT * FROM organization WHERE idorganization=%s or name=%s", (escape_string(str(organizationkey)), escape_string(organizationkey)))
+	c.execute("SELECT * FROM organization WHERE name=%s", (escape_string(organizationname)))
+	organization_data = c.fetchone()
+	c.close()
+	conn.close()
+	return organization_data
+
+def get_organization_by_id(organizationid):
+	"""Function takes organization id and returns dict with organization's data"""
+	c, conn = connection()
+	c.execute("SELECT * FROM organization WHERE idorganization=%s", (escape_string(organizationid)))
 	organization_data = c.fetchone()
 	c.close()
 	conn.close()
@@ -252,7 +277,7 @@ def get_event_next_month():
 	return event_data
 
 def confirm_email(usermail):
-	'''Function confirms user's mail'''
+	"""Function takes user's mail and confirms it in database"""
 	c, conn = connection()
 	c.execute('UPDATE user SET email_confirm=1 WHERE email=%s', (escape_string(usermail)))
 	conn.commit()
