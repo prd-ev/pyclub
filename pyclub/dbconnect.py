@@ -5,13 +5,6 @@ from datetime import datetime, timedelta
 
 __author__ = "Tomasz Lakomy"
 
-def create_db():
-	"""Function creates database from file create-database_pyclub.py"""
-	c, conn = connection()
-	c.execute("SOURCE sql/create-database_pyclub.sql")
-	c.close()
-	conn.close()
-
 def connection():
 	"""Function connects to database"""
 	conn = pymysql.connect(host='localhost',
@@ -57,7 +50,7 @@ def create_club(info, organization_id):
 	conn.close()
 
 def create_event(date, info, club_id):
-	"""Function takes date (yyyy-mm-dd) information and club id, creates event and assigns to club in database"""
+	"""Function takes date (yyyy-mm-dd hh:mm:ss) information and club id, creates event and assigns to club in database"""
 	c, conn = connection()
 	c.execute("INSERT INTO event (date, info, club_id) VALUES"
 			  "(%s, %s, %s)"
@@ -159,7 +152,7 @@ class User(dict):
 	def userid(self, userkey):
 		self.id = userkey
 
-def get_organization(organizationname):
+def get_organization_by_name(organizationname):
 	"""Function takes organization name and returns dict with organization's data"""
 	c, conn = connection()
 	c.execute("SELECT * FROM organization WHERE name=%s", (escape_string(organizationname)))
@@ -171,7 +164,7 @@ def get_organization(organizationname):
 def get_organization_by_id(organizationid):
 	"""Function takes organization id and returns dict with organization's data"""
 	c, conn = connection()
-	c.execute("SELECT * FROM organization WHERE idorganization=%s", (escape_string(organizationid)))
+	c.execute("SELECT * FROM organization WHERE idorganization=%s", (escape_string(str(organizationid))))
 	organization_data = c.fetchone()
 	c.close()
 	conn.close()

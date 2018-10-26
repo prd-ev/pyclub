@@ -3,14 +3,6 @@ from pyclub.dbconnect import get_club, get_event, get_organization, get_user, ge
 
 app = Flask(__name__)
 
-@app.route('/')
-def hello():
-    return 'Hello, World!'
-
-@app.route('/app/')
-def hi():
-    return "Hello there"
-
 @app.route('/api/user/<userid>')
 def apiuser(userid):
     user = get_user(userid)
@@ -53,4 +45,4 @@ def apiuserevent_membership(membershipdata):
     return jsonify(userevent_membership)
 
 if __name__ == "__main__":
-    app.run(debug=True, host="127.0.0.1")
+    app.run(host="127.0.0.1", port="5000")
