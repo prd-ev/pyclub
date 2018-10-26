@@ -64,12 +64,6 @@ def activate_account(confirmation_token):
 
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-<<<<<<< HEAD
     app.run(host="127.0.0.1", port=5000, debug=True)
-=======
-    app.run(debug=True, host="127.0.0.1", port="5000")
->>>>>>> parent of 2fa7443... Dziala
-=======
-    app.run(debug=True, host="127.0.0.1", port="5000")
->>>>>>> parent of 2fa7443... Dziala
+
+
