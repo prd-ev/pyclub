@@ -3,7 +3,6 @@ from pyclub.dbconnect import create_user, confirm_email
 from werkzeug.security import generate_password_hash
 from email_confirmation import confirm_token, send_email_authentication
 from main import app
-from error_handlers import page_not_found, server_error
 
 @app.route("/")
 def index_page():
@@ -52,6 +51,16 @@ def activate_account(confirmation_token):
         mail = confirm_token(confirmation_token)
         confirm_email(mail)
         return redirect(url_for('index_page'))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404notfound.html'), 404
+
+
+@app.errorhandler(500)
+def server_error(e):
+    return render_template('505server_error.html')
 
 
 if __name__ == "__main__":
