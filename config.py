@@ -14,3 +14,4 @@ class Config(object):
     #SECURITY CONFIGURATION
     SECRET_KEY = b'Hello-there-general-kenobi'
     SECURITY_PASSWORD_SALT = 'witam123mordeczko'
+    
