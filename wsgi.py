@@ -53,6 +53,8 @@ def activate_account(confirmation_token):
         return redirect(url_for('index_page'))
 
 
+#error handlers
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404notfound.html'), 404
@@ -64,4 +66,4 @@ def server_error(e):
 
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000)
+    app.run(host = app.config["HOST"], port = app.config["PORT"], debug=app.config["DEBUG"])
