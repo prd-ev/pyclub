@@ -5,4 +5,3 @@ __pycache__
 venv
 tests/__pycache__/*
 pyclub/__pycache__/*
-
