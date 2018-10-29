@@ -11,3 +11,6 @@ ALTER TABLE event_membership
 
 ALTER TABLE user 
     ADD COLUMN email_confirm tinyint(1) NOT NULL;
+
+ALTER TABLE event_membership
+    DROP COLUMN own_club_id;
