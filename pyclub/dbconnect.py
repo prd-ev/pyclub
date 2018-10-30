@@ -19,8 +19,8 @@ def connection():
 def create_user(first_name, last_name, email, password):
 	"""Function takes first name, last name, email and password and creates user in database"""
 	c, conn = connection()
-	c.execute("INSERT INTO user (first_name, last_name, email, password, email_confirm) VALUES"
-			  "(%s, %s, %s, %s, 0)"
+	c.execute("INSERT INTO user (first_name, last_name, email, password) VALUES"
+			  "(%s, %s, %s, %s)"
 			  , (escape_string(first_name), escape_string(last_name), escape_string(email), escape_string(password))
 	)
 	conn.commit()
@@ -280,6 +280,16 @@ def get_event_next_month():
 	time = today + timedelta(days=30)
 	c, conn = connection()
 	c.execute('SELECT idevent FROM event WHERE date<=%s and date>%s', (time, today))
+	event_data = c.fetchall()
+	c.close()
+	conn.close()
+	return event_data
+
+def get_further_events(userid):
+	""" """
+	c, conn = connection()
+	today = datetime.today()
+	c.execute('SELECT idevent FROM event WHERE date>=%s', (today))
 	event_data = c.fetchall()
 	c.close()
 	conn.close()
