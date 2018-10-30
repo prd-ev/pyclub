@@ -10,7 +10,7 @@ class Config(object):
     MAIL_PORT=465
     MAIL_USE_SSL=True
     MAIL_USERNAME = "pyclubpoznan@gmail.com"
-    MAIL_PASSWORD = "zskpyclub"
+    MAIL_PASSWORD = ""
     #SECURITY CONFIGURATION
     SECRET_KEY = b'Hello-there-general-kenobi'
     SECURITY_PASSWORD_SALT = 'witam123mordeczko'
