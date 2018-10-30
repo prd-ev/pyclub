@@ -295,10 +295,10 @@ def get_further_events(userid):
 	conn.close()
 	return event_data
 
-def confirm_email(usermail):
-	"""Function takes user's mail and confirms it in database"""
+def confirm_email(mail):
+	'''Function confirms user's mail'''
 	c, conn = connection()
-	c.execute('UPDATE user SET email_confirm=1 WHERE email=%s', (escape_string(usermail)))
+	c.execute('UPDATE user SET email_confirm=1 WHERE email=%s', escape_string(str(mail)))
 	conn.commit()
 	c.close()
 	conn.close()
