@@ -106,7 +106,7 @@ def del_organization(organizationid):
 
 def del_club(clubid):
 	"""Function takes club's id and deletes it from database
-	
+
 		tip: check dependencies before deleting
 	"""
 	c, conn = connection()
