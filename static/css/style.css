@@ -103,8 +103,16 @@ header nav {
 
 /* showcase */
 
+#showcasebox {
+    min-height: 387px;
+}
+
+#showcaseboxerror {
+    min-height: 630px;
+}
+
 #showcase {
-    min-height: 500px;
+    
     background: url(../images/webdevelop.jpg) no-repeat -100px -100px;
     text-align: center;
     color: #ffffff;
@@ -150,7 +158,7 @@ header nav {
 footer {
     background-color: #C0507B;
     padding: 20px;
-    margin-top: 20px;
+    margin-top: 0;
     text-align: center;
     border-top: #ffffff 3px solid;
     border-bottom: #ffffff 3px solid;
