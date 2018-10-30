@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `pyclub`.`user` (
   `last_name` VARCHAR(100) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `password` VARCHAR(256) NOT NULL,
-  `email_confirm` TINYINT(1) UNIQUE,
+  `email_confirm` TINYINT(1) UNIQUE DEFAULT 0,
   PRIMARY KEY (`iduser`))
 ENGINE = InnoDB;
 

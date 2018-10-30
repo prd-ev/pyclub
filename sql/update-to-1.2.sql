@@ -4,3 +4,6 @@
 
 --ALTER TABLE event_membership
 --    DROP FOREIGN KEY event_club_idclub;
+
+ALTER TABLE user
+    ALTER email_confirm SET DEFAULT 0;
