@@ -4,7 +4,7 @@
 
 USE 'pyclub';
 ALTER TABLE user
-    ADD UNIQUE (email);
+    ADD IF NOT EXIST UNIQUE (email);
 
 ALTER TABLE event_membership
     CHANGE COLUMN event_club_idclub own_club_id int(11);
