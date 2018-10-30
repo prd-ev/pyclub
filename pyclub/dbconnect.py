@@ -14,7 +14,7 @@ def create_db():
 def connection():
 	'''Function connects to database'''
 	conn = pymysql.connect(host='localhost',
-			       user='root',
+			       user='kostek',
 			       password='',
 			       db='pyclub',
 			       charset='utf8mb4',
@@ -182,7 +182,7 @@ def confirm_email(mail):
 	conn.commit()
 	c.close()
 	conn.close()
-	return event_data
+
 
 def get__all_emails():
 	'''Function takes all emails and creates a list'''

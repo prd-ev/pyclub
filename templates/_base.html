@@ -9,6 +9,15 @@
         <meta name="description" content="Portal służący do zarządzaniem wydarzeniami i klubami" />
         <title>{% block title %}{%endblock%}</title>
         <!--<link rel="icon" href="/static/images/zskalpha.png" type="image/x-icon">-->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
 
         <link rel="stylesheet", href="/static/css/style.css" />
     </head>
@@ -17,9 +26,8 @@
             <div class="container">
                 <div id="brand">
                     <h1>PyClub</h1>
-                    {% if session_true != None %}
-                    <div>
-                        <p>Witaj, {{session_true}}!</p>
+                    {% if current_user.is_authenticated %}
+                    Hi {{ current_user.first_name }}!
                     {% endif %}
                 </div>
                 <nav>
@@ -28,14 +36,13 @@
                         <li><a href="/about/">O nas</a></li>
                         <li><a href="/contact/">Kontakt</a></li>
                         <li>|</li>
-                        {% if session_true == None %}
+                        {% if current_user.is_anonymous %}
                         <li><a href="/register/">Rejestracja</a></li>
                         <li><a href="/login/">Logowanie</a></li>
                         {% else %}
                         <li><a href='/logout/'>Wyloguj</a></li>
-                        <li><a href='/profile/'>Profil</a></li>
+                        <li><a href='/profile/'>Profil</a></li> 
                         {% endif %}
-
                     </ul>
                 </nav>
             </div>

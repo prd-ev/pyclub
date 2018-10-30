@@ -1,21 +1,27 @@
-from flask import render_template, request, url_for, redirect, session
+from flask import render_template, request, url_for, redirect, session, flash
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from pyclub.dbconnect import create_user, confirm_email, get_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_confirmation import confirm_token, send_email_authentication
 from main import app
 
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login_page"
+login_manager.login_message = "Zaloguj się aby uzyskać dostęp"
+
+@login_manager.user_loader
+def load_user(user_id):
+    return get_user(user_id)
+
 @app.route("/")
 def index_page():
-    logged_in = None
-    if 'first_name' in session:
-        logged_in = session['first_name']
-    return render_template("index.html", session_true = logged_in)
+    return render_template("index.html")
 
 
 @app.route("/register/", methods = ["POST", "GET"])
 def register_page():
-    logged_in = None
     error_message = None
     if request.method == "POST":
         new_email = request.form['email']
@@ -34,13 +40,12 @@ def register_page():
             error_message = "Hasła muszą się zgadzać"
         else:
             error_message = "Uzupełnij wszystkie pola"
-    return render_template("register.html", error = error_message, session_true = logged_in)
+    return render_template("register.html", error = error_message)
 
 
 @app.route("/login/", methods = ["POST", "GET"])
 def login_page():
     error_message = None
-    logged_in = None
     if request.method == "POST":
         attempted_email = request.form['email']
         attempted_password = request.form['password']
@@ -50,47 +55,31 @@ def login_page():
         else:
             db_password = user_dict.get('password')
             if check_password_hash(db_password, attempted_password):
-                db_name = user_dict.get('first_name')
-                session['first_name'] = db_name
-                db_id = user_dict.get('iduser')
-                session['ID'] = db_id
+                login_user(get_user(attempted_email))
+                flash('Logged in successfully.')
                 return redirect(url_for('index_page'))
             error_message = "Nieprawidłowe hasło"
-    return render_template("login.html", session_true = logged_in, error = error_message)
+    return render_template("login.html", error = error_message)
 
 @app.route('/logout/')
 def logout():
-    session.clear()
+    logout_user()
     return redirect(url_for('index_page'))
 
 
 @app.route("/contact/")
 def contact_page():
-    logged_in = None
-    if 'first_name' in session:
-        logged_in = session['first_name']
-    return render_template("contact.html", session_true = logged_in)
+    return render_template("contact.html")
 
 
 @app.route("/about/")
 def about_page():
-    logged_in = None
-    if 'first_name' in session:
-        logged_in = session['first_name']
-    return render_template("about.html", session_true = logged_in)
+    return render_template("about.html")
 
 @app.route("/profile/")
+@login_required
 def profile_page():
-    logged_in = None
-    if 'first_name' in session:
-        logged_in = session['first_name']
-        user_id = session['ID']
-        current_user_dict = get_user(str(user_id))
-        first_name = current_user_dict['first_name']
-        last_name = current_user_dict['last_name']
-        email = current_user_dict['email']
-    return render_template("profile.html", session_true = logged_in, user_first_name = first_name, user_last_name = last_name, user_email = email)
-
+    return render_template("profile.html")
 
 
 @app.route("/activate/<confirmation_token>/")

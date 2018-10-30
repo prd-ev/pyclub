@@ -4,13 +4,13 @@ class Config(object):
     #SERVER CONFIGURATION
     HOST = "127.0.0.1"
     PORT = 5000
-    DEBUG = False
+    DEBUG = True
     #EMAIL CONFIGURATION
     MAIL_SERVER='smtp.gmail.com'
     MAIL_PORT=465
     MAIL_USE_SSL=True
     MAIL_USERNAME = "pyclubpoznan@gmail.com"
-    MAIL_PASSWORD = ""
+    MAIL_PASSWORD = "zskpyclub"
     #SECURITY CONFIGURATION
     SECRET_KEY = b'Hello-there-general-kenobi'
     SECURITY_PASSWORD_SALT = 'witam123mordeczko'
