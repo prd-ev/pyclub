@@ -188,10 +188,23 @@ def get__all_emails():
 	'''Function takes all emails and creates a list'''
 	c, conn = connection()
 	c.execute('SELECT email FROM user')
-	emails_dict = c.fetchall()
+	emails_list = c.fetchall()
 	c.close()
 	conn.close()
 	emails = []
-	for pair in emails_dict:
+	for pair in emails_list:
 		emails.append(pair['email'])
 	return emails
+
+def get__all_organization_names():
+	'''Function takes all organization names and creates a list'''
+	c, conn = connection()
+	c.execute('SELECT name FROM organization')
+	organization_names_list = c.fetchall()
+	c.close()
+	conn.close()
+	organization_names = []
+	for pair in organization_names_list:
+		organization_names.append(pair['name'])
+	return organization_names
+

@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for, redirect, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from pyclub.dbconnect import create_user, confirm_email, get_user
+from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get__all_organization_names, get_organization
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_confirmation import confirm_token, send_email_authentication
 from main import app
@@ -60,6 +60,38 @@ def login_page():
                 return redirect(url_for('index_page'))
             error_message = "Nieprawidłowe hasło"
     return render_template("login.html", error = error_message)
+
+
+@app.route("/profile/add_organization", methods = ["POST", "GET"])
+@login_required
+def add_organization_page():
+    if request.method == 'POST':
+        new_organization_name = request.form['organization_name']
+        new_organization_contact = request.form['organization_contact']
+        if new_organization_name and new_organization_contact:
+            create_organization(new_organization_name, new_organization_contact)
+            return redirect(url_for('profile_page'))
+        flash('Fill in all the fields')
+    return render_template('add_organization.html')
+            
+
+@app.route("/organizations/")
+def get__all_organization_page():
+    organization_list = get__all_organization_names()
+    return render_template('organizations.html', list = organization_list)  
+
+
+#@app.route("/organizations/<organization_name>")
+#def test_page():
+#    return "test"
+
+@app.route('/organizations/<organization_name>')
+def organization_page(organization_name):
+    organization_dict = get_organization(organization_name)
+    print(organization_dict)
+    current_organization_contact = organization_dict.get('contact')
+    current_organization_name = organization_dict.get('name')
+    return render_template('organization_profile.html', name = current_organization_name, contact = current_organization_contact)
 
 @app.route('/logout/')
 def logout():

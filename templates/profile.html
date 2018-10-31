@@ -1,10 +1,11 @@
 {% extends "_base.html" %}
 {% block title %}
-PyClub | {{user_first_name}}
+PyClub | {{current_user.first_name}}
 {% endblock %}
 {% block section %}
 <h1>Profil</h1>
 <p>Imię Użytkownika: {{current_user.first_name}}</p>
 <p>Nazwisko Użytkownika: {{current_user.last_name}}</p>
 <p>Email: {{current_user.email}}</p>
+<a href="add_organization" class="button">Załóż organizację</a>
 {% endblock %}
