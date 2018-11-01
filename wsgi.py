@@ -62,7 +62,7 @@ def login_page():
     return render_template("login.html", error = error_message)
 
 
-@app.route("/profile/add_organization", methods = ["POST", "GET"])
+@app.route("/profile/add_organization/", methods = ["POST", "GET"])
 @login_required
 def add_organization_page():
     if request.method == 'POST':
@@ -89,7 +89,7 @@ def organization_page(organization_name):
     current_organization_name = organization_dict.get('name')
     return render_template('organization_profile.html', name = current_organization_name, contact = current_organization_contact)
 
-@app.route('/organizations/<organization_name>/new_club', methods = ["POST", "GET"])
+@app.route('/organizations/<organization_name>/new_club/', methods = ["POST", "GET"])
 @login_required
 def add_club_page(organization_name):
     if request.method == 'POST':
