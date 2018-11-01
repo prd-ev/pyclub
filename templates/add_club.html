@@ -1,16 +1,15 @@
 {% extends "_base.html" %}
 {% block title %}
-PyClub | Nowa Organizacja 
+PyClub | Nowa Klub
 {% endblock %}
 {% block section %}
 <div class="container">
     <div class="formsbox">
     <div class="forms">
         <div class="container">
-        <h1>Dodaj organizację: </h1>
-        <form action="/profile/add_organization" method="POST">
-            <input class="form", type="text", name="organization_name", placeholder="Nazwa Organizacji">
-            <input class="form", type="text", name="organization_contact", placeholder="Kontakt">
+        <h1>Dodaj klub:</h1>
+        <form action="/organizations/{{parent_name}}/new_club" method="POST">
+            <input class="form", type="text", name="club_info", placeholder="Informacje o klubie">
             <input class="button" , type="submit", name="submit", value="Załóż">
         </form>
         </div>
