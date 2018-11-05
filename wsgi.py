@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for, redirect, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get__all_organization_names, get_organization, create_club
+from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get__all_organization_names, get_organization, create_club, create_club_membership
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_confirmation import confirm_token, send_email_authentication
 from main import app
@@ -95,10 +95,12 @@ def add_club_page(organization_name):
     if request.method == 'POST':
         organization_dict = get_organization(organization_name)
         parent_organization = organization_dict.get('idorganization')
+        print(parent_organization)
         new_club_info = request.form["club_info"]
         print(new_club_info)
         if parent_organization and new_club_info:
             create_club(new_club_info, parent_organization)
+            #create_club_membership(current_user.iduser,clubID)
             return redirect(url_for('profile_page'))
     return render_template('add_club.html', parent_name=organization_name)
 
