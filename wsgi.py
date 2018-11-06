@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for, redirect, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get__all_organization_names, get_organization, create_club, create_club_membership
+from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get_all_organization_names, get_organization, create_club, create_club_membership
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_confirmation import confirm_token, send_email_authentication
 from main import app
@@ -14,6 +14,7 @@ login_manager.login_message = "Zaloguj się aby uzyskać dostęp"
 @login_manager.user_loader
 def load_user(user_id):
     return get_user(user_id)
+
 
 @app.route("/")
 def index_page():
@@ -76,8 +77,8 @@ def add_organization_page():
             
 
 @app.route("/organizations/")
-def get__all_organization_page():
-    organization_list = get__all_organization_names()
+def get_all_organization_page():
+    organization_list = get_all_organization_names()
     return render_template('organizations.html', list = organization_list)  
 
 
@@ -104,6 +105,8 @@ def add_club_page(organization_name):
             return redirect(url_for('profile_page'))
     return render_template('add_club.html', parent_name=organization_name)
 
+
+@app.route('/organizations/<organization_name>/<club_name/>')
 
 @app.route('/logout/')
 def logout():

@@ -184,7 +184,7 @@ def confirm_email(mail):
 	conn.close()
 
 
-def get__all_emails():
+def get_all_emails():
 	'''Function takes all emails and creates a list'''
 	c, conn = connection()
 	c.execute('SELECT email FROM user')
@@ -196,7 +196,7 @@ def get__all_emails():
 		emails.append(pair['email'])
 	return emails
 
-def get__all_organization_names():
+def get_all_organization_names():
 	'''Function takes all organization names and creates a list'''
 	c, conn = connection()
 	c.execute('SELECT name FROM organization')
