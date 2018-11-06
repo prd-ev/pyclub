@@ -346,3 +346,10 @@ def change_user_password(userid, new_password):
 	conn.commit()
 	c.close()
 	conn.close()
+
+def change_event_date(eventid, new_date):
+	c, conn = connection()
+	c.execute('UPDATE event SET date=%s WHERE idevent=%s', (escape_string(new_date), escape_string(str(str(eventid)))))
+	conn.commit()
+	c.close()
+	conn.close()
