@@ -208,8 +208,6 @@ def get_all_organization_names():
 		organization_names.append(pair['name'])
 	return organization_names
 
-<<<<<<< HEAD
-=======
 def change_user_password(userid, new_password):
 	c, conn = connection()
 	c.execute('UPDATE user SET password=%s WHERE iduser=%s', (escape_string(new_password), escape_string(str(str(userid)))))
@@ -223,4 +221,3 @@ def change_event_date(eventid, new_date):
 	conn.commit()
 	c.close()
 	conn.close()
->>>>>>> origin/feature/db-handlers
