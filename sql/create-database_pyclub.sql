@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `pyclub`.`user` (
   `email` VARCHAR(100) NOT NULL,
   `password` VARCHAR(256) NOT NULL,
   `email_confirm` TINYINT(1) UNIQUE DEFAULT 0,
+  `admin` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`iduser`))
 ENGINE = InnoDB;
 
@@ -36,7 +37,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pyclub`.`organization` (
   `idorganization` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
+  `name` VARCHAR(100) NOT NULL UNIQUE,
   `contact` LONGTEXT NOT NULL,
   PRIMARY KEY (`idorganization`))
 ENGINE = InnoDB;
@@ -49,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `pyclub`.`club` (
   `idclub` INT NOT NULL AUTO_INCREMENT,
   `info` LONGTEXT NULL,
   `organization_id` INT NOT NULL,
+  `name` varchar(100) NOT NULL UNIQUE,
   PRIMARY KEY (`idclub`, `organization_id`),
   INDEX `fk_club_organization1_idx` (`organization_id` ASC),
   CONSTRAINT `fk_club_organization1`

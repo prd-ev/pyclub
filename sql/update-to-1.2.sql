@@ -10,3 +10,9 @@ ALTER TABLE event_membership
 
 ALTER TABLE user
     ALTER email_confirm SET DEFAULT 0;
+
+ALTER TABLE club
+    ADD name varchar(100) NOT NULL UNIQUE;
+
+ALTER TABLE organization
+    ADD UNIQUE (name);
