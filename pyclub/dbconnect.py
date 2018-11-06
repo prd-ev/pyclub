@@ -186,11 +186,19 @@ def get_organization_by_id(organizationid):
 	conn.close()
 	return organization_data
 
-def get_club(clubid):
-	"""Function takes club id and returns club data"""
+def get_club(clubname):
+	"""Function takes club name and returns club data"""
 	c, conn = connection()
-	c.execute("SELECT * FROM club WHERE idclub=%s", (escape_string(str(clubid))))
+	c.execute("SELECT * FROM club WHERE name=%s", (escape_string(str(clubname))))
 	club_data = c.fetchone()
+	c.close()
+	conn.close()
+	return club_data
+
+def get_club_by_organization(organizationid):
+	c, conn = connection()
+	c.execute("SELECT * FROM club WHERE organization_id=%s", (escape_string(organizationid)))
+	club_data = c.fetchall()
 	c.close()
 	conn.close()
 	return club_data
