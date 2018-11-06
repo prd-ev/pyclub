@@ -8,7 +8,7 @@ __author__ = "Tomasz Lakomy"
 def connection():
 	"""Function connects to database"""
 	conn = pymysql.connect(host='localhost',
-			       user='tykaz',
+			       user='kostek',
 			       password='',
 			       db='pyclub',
 			       charset='utf8mb4',
@@ -197,7 +197,10 @@ def get_club_by_organization(organizationid):
 	club_data = c.fetchall()
 	c.close()
 	conn.close()
-	return club_data
+	club_names = []
+	for pair in club_data:
+		club_names.append(pair['name'])
+	return club_names
 
 def get_event(eventid):
 	"""Functions takes event id and returns event data"""
@@ -348,3 +351,16 @@ def change_event_date(eventid, new_date):
 	conn.commit()
 	c.close()
 	conn.close()
+
+
+def get_all_organization_names():
+	'''Function takes all organization names and creates a list'''
+	c, conn = connection()
+	c.execute('SELECT name FROM organization')
+	organization_names_list = c.fetchall()
+	c.close()
+	conn.close()
+	organization_names = []
+	for pair in organization_names_list:
+		organization_names.append(pair['name'])
+	return organization_names

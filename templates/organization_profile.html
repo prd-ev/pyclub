@@ -5,5 +5,12 @@ PyClub | {{name}}
 {% block section %}
 <p>Organizacja: {{name}}</p>
 <p>Kontakt: {{contact}}</p>
+{% for club in list%}
+    <div>
+        <form action='/organizations/{{name}}/{{club}}/', method="GET">
+        <input class="button" , type="submit", name="submit", value={{club}}>
+    </form>
+    </div>
+{% endfor %}
 <p><a href='/organizations/{{name}}/new_club/'>Nowy Klub</a></p>
 {% endblock %}

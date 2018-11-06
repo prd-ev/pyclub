@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for, redirect, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get_all_organization_names, get_organization, create_club, create_club_membership
+from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get_all_organization_names, get_organization_by_name, create_club, create_club_membership, get_club, get_club_by_organization
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_confirmation import confirm_token, send_email_authentication
 from main import app
@@ -85,28 +85,41 @@ def get_all_organization_page():
 @app.route('/organizations/<organization_name>/')
 @login_required
 def organization_page(organization_name):
-    organization_dict = get_organization(organization_name)
+    organization_dict = get_organization_by_name(organization_name)
     current_organization_contact = organization_dict.get('contact')
     current_organization_name = organization_dict.get('name')
-    return render_template('organization_profile.html', name = current_organization_name, contact = current_organization_contact)
+    current_organization_id = organization_dict.get('idorganization')
+    current_organization_club_list = get_club_by_organization(current_organization_id)
+    return render_template('organization_profile.html', name = current_organization_name, contact = current_organization_contact, list = current_organization_club_list)
 
 @app.route('/organizations/<organization_name>/new_club/', methods = ["POST", "GET"])
 @login_required
 def add_club_page(organization_name):
     if request.method == 'POST':
-        organization_dict = get_organization(organization_name)
+        organization_dict = get_organization_by_name(organization_name)
         parent_organization = organization_dict.get('idorganization')
-        print(parent_organization)
+        new_club_name = request.form["club_name"]
         new_club_info = request.form["club_info"]
-        print(new_club_info)
         if parent_organization and new_club_info:
-            create_club(new_club_info, parent_organization)
-            #create_club_membership(current_user.iduser,clubID)
-            return redirect(url_for('profile_page'))
+            create_club(new_club_info, parent_organization, new_club_name)
+            club_dict = get_club(new_club_name)
+            new_club_id = club_dict.get('idclub')
+            create_club_membership(current_user.id,new_club_id)
+            return redirect(url_for('organization_page', organization_name=organization_name))
     return render_template('add_club.html', parent_name=organization_name)
 
 
-@app.route('/organizations/<organization_name>/<club_name/>')
+@app.route('/organizations/<organization_name>/<club_name>/')
+def club_page(organization_name, club_name):
+    current_club_dict = get_club(club_name)
+    current_club_info = current_club_dict.get('info')
+    return render_template('club_profile.html', name=club_name, info=current_club_info)
+
+@app.route('/test/')
+def test():
+    x = str(get_club_by_organization(1))
+    return x
+
 
 @app.route('/logout/')
 def logout():
