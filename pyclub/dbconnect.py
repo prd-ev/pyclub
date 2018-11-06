@@ -117,7 +117,7 @@ def del_club(clubid):
 
 def del_event(eventid):
 	"""Function takes event's id and deletes it from database
-	
+
 		tip: check dependencies before deleting
 	"""
 	c, conn = connection()
