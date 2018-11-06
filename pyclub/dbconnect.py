@@ -171,7 +171,7 @@ class User(dict):
 def get_organization_by_name(organizationname):
 	"""Function takes organization name and returns dict with organization's data"""
 	c, conn = connection()
-	c.execute("SELECT * FROM organization WHERE name=%s", (escape_string(organizationname)))
+	c.execute("SELECT * FROM organization WHERE name=%s", escape_string(organizationname))
 	organization_data = c.fetchone()
 	c.close()
 	conn.close()
@@ -180,7 +180,7 @@ def get_organization_by_name(organizationname):
 def get_organization_by_id(organizationid):
 	"""Function takes organization id and returns dict with organization's data"""
 	c, conn = connection()
-	c.execute("SELECT * FROM organization WHERE idorganization=%s", (escape_string(str(organizationid))))
+	c.execute("SELECT * FROM organization WHERE idorganization=%s", escape_string(str(organizationid)))
 	organization_data = c.fetchone()
 	c.close()
 	conn.close()
@@ -189,7 +189,7 @@ def get_organization_by_id(organizationid):
 def get_club(clubname):
 	"""Function takes club name and returns club data"""
 	c, conn = connection()
-	c.execute("SELECT * FROM club WHERE name=%s", (escape_string(str(clubname))))
+	c.execute("SELECT * FROM club WHERE name=%s", escape_string(str(clubname)))
 	club_data = c.fetchone()
 	c.close()
 	conn.close()
@@ -197,7 +197,7 @@ def get_club(clubname):
 
 def get_club_by_organization(organizationid):
 	c, conn = connection()
-	c.execute("SELECT name FROM club WHERE organization_id=%s", (escape_string(str(organizationid))))
+	c.execute("SELECT name FROM club WHERE organization_id=%s", escape_string(str(organizationid)))
 	club_data = c.fetchall()
 	c.close()
 	conn.close()
@@ -206,7 +206,7 @@ def get_club_by_organization(organizationid):
 def get_event(eventid):
 	"""Functions takes event id and returns event data"""
 	c, conn = connection()
-	c.execute("SELECT * FROM event WHERE idevent=%s", (escape_string(str(eventid))))
+	c.execute("SELECT * FROM event WHERE idevent=%s", escape_string(str(eventid)))
 	event_data = c.fetchone()
 	c.close()
 	conn.close()
@@ -215,7 +215,7 @@ def get_event(eventid):
 def get_event_membership(eventid):
 	"""Function takes userid or eventid and returns event membership"""
 	c, conn = connection()
-	c.execute('SELECT * FROM event_membership WHERE event_id=%s', (escape_string(str(eventid))))
+	c.execute('SELECT * FROM event_membership WHERE event_id=%s', escape_string(str(eventid)))
 	eventid = c.fetchall()
 	c.close()
 	conn.close()
@@ -223,7 +223,7 @@ def get_event_membership(eventid):
 
 def get_user_to_event_membership(userid):
 	c, conn = connection()
-	c.execute('SELECT * FROM event_membership WHERE user_id=%s', (escape_string(str(userid))))
+	c.execute('SELECT * FROM event_membership WHERE user_id=%s', escape_string(str(userid)))
 	userid = c.fetchall()
 	c.close()
 	conn.close()
@@ -232,7 +232,7 @@ def get_user_to_event_membership(userid):
 def get_club_membership(clubid):
 	"""Function takes clubid and returns club membership"""
 	c, conn = connection()
-	c.execute('SELECT * FROM club_membership WHERE club_id=%s', (escape_string(str(clubid))))
+	c.execute('SELECT * FROM club_membership WHERE club_id=%s', escape_string(str(clubid)))
 	clubid = c.fetchall()
 	c.close()
 	conn.close()
@@ -240,7 +240,7 @@ def get_club_membership(clubid):
 
 def get_user_to_club_membership(userid):
 	c, conn = connection()
-	c.execute('SELECT * FROM club_membership WHERE user_id=%s', (escape_string(str(userid))))
+	c.execute('SELECT * FROM club_membership WHERE user_id=%s', escape_string(str(userid)))
 	userid = c.fetchall()
 	c.close()
 	conn.close()
