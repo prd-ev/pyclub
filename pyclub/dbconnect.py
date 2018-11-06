@@ -38,12 +38,12 @@ def create_organization(name, contact):
 	c.close()
 	conn.close()
 
-def create_club(info, organization_id):
+def create_club(info, organization_id, name):
 	"""Function takes info and organization id, creates and assigns club to organization in database"""
 	c, conn = connection()
-	c.execute("INSERT INTO club (info, organization_id) VALUES"
-			  "(%s, %s)"
-			  , (escape_string(info), escape_string(str(organization_id)))
+	c.execute("INSERT INTO club (info, organization_id, name) VALUES"
+			  "(%s, %s, %s)"
+			  , (escape_string(info), escape_string(str(organization_id)), escape_string(name))
 	)
 	conn.commit()
 	c.close()
@@ -197,7 +197,7 @@ def get_club(clubname):
 
 def get_club_by_organization(organizationid):
 	c, conn = connection()
-	c.execute("SELECT * FROM club WHERE organization_id=%s", (escape_string(organizationid)))
+	c.execute("SELECT name FROM club WHERE organization_id=%s", (escape_string(str(organizationid))))
 	club_data = c.fetchall()
 	c.close()
 	conn.close()
@@ -307,6 +307,20 @@ def confirm_email(mail):
 	'''Function confirms user's mail'''
 	c, conn = connection()
 	c.execute('UPDATE user SET email_confirm=1 WHERE email=%s', escape_string(str(mail)))
+	conn.commit()
+	c.close()
+	conn.close()
+
+def give_admin(userid):
+	c, conn = connection()
+	c.execute('UPDATE user SET admin=1 WHERE iduser=%s', (escape_string(str(userid))))
+	conn.commit()
+	c.close()
+	conn.close()
+
+def change_mail(userid, new_mail):
+	c, conn = connection()
+	c.execute('UPDATE user SET email=%s WHERE iduser=%s', (escape_string(new_mail), escape_string(str(userid))))
 	conn.commit()
 	c.close()
 	conn.close()
