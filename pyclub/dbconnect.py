@@ -66,7 +66,7 @@ def create_event(date, info, club_id):
 	c.close()
 	conn.close()
 
-def create_event_membership(userid, eventid): #??????
+def create_event_membership(userid, eventid): #????
 	'''Function takes user id, event id and club which is owner of the event and assigns user to event'''
 	c, conn = connection()
 	c.execute('INSERT INTO event_membership (user_id, event_id) VALUES'
