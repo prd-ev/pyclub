@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for, redirect, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get_all_organization_names, get_organization_by_name, create_club, create_club_membership, get_club, get_club_by_organization
+from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get_all_organization_names, get_organization_by_name, create_club, create_club_membership, get_club, get_club_by_organization, create_event
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_confirmation import confirm_token, send_email_authentication
 from main import app
@@ -113,7 +113,22 @@ def add_club_page(organization_name):
 def club_page(organization_name, club_name):
     current_club_dict = get_club(club_name)
     current_club_info = current_club_dict.get('info')
-    return render_template('club_profile.html', name=club_name, info=current_club_info)
+    return render_template('club_profile.html', club_name=club_name, info=current_club_info,organization_name=organization_name)
+
+@app.route('/organizations/<organization_name>/<club_name>/new_event/', methods=["POST", "GET"])
+def new_event_page(organization_name, club_name):
+    if request.method == 'POST':
+        current_club_dict = get_club(club_name)
+        current_club_id = current_club_dict.get('idclub')
+        print(current_club_id)
+        new_event_date = request.form['event_date']
+        new_event_date = new_event_date.split('T')
+        new_event_date = new_event_date[0] + " " + new_event_date[1] + ":00"
+        print(new_event_date)
+        new_event_info = request.form['event_info']
+        if new_event_date and new_event_info and current_club_id:
+            create_event(new_event_date, new_event_info, current_club_id)
+    return render_template('new_event.html', organization_name=organization_name, club_name=club_name)
 
 @app.route('/test/')
 def test():

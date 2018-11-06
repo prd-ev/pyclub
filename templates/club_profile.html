@@ -1,8 +1,9 @@
 {% extends "_base.html" %}
 {% block title %}
-PyClub | {{name}}
+PyClub | {{club_name}}
 {% endblock %}
 {% block section %}
-<h1>{{name}}</h1>
+<h1>{{club_name}}</h1>
 <p>{{info}}</p>
+<p><a href='/organizations/{{organization_name}}/{{club_name}}/new_event/'>Nowe wydarzenie</a></p>
 {% endblock %}
