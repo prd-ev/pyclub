@@ -24,9 +24,10 @@ CREATE TABLE IF NOT EXISTS `pyclub`.`user` (
   `iduser` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(100) NOT NULL,
   `last_name` VARCHAR(100) NOT NULL,
-  `email` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) UNIQUE NOT NULL,
   `password` VARCHAR(256) NOT NULL,
-  `email_confirm` TINYINT(1) UNIQUE DEFAULT 0,
+  `email_confirm` TINYINT(1) DEFAULT 0,
+  `admin` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`iduser`))
 ENGINE = InnoDB;
 
@@ -36,8 +37,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pyclub`.`organization` (
   `idorganization` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NOT NULL,
+  `name` VARCHAR(100) NOT NULL UNIQUE,
   `contact` LONGTEXT NOT NULL,
+  `owner_id` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`idorganization`))
 ENGINE = InnoDB;
 
@@ -49,6 +51,8 @@ CREATE TABLE IF NOT EXISTS `pyclub`.`club` (
   `idclub` INT NOT NULL AUTO_INCREMENT,
   `info` LONGTEXT NULL,
   `organization_id` INT NOT NULL,
+  `name` varchar(100) NOT NULL UNIQUE,
+  `owner_id` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`idclub`, `organization_id`),
   INDEX `fk_club_organization1_idx` (`organization_id` ASC),
   CONSTRAINT `fk_club_organization1`
@@ -67,6 +71,7 @@ CREATE TABLE IF NOT EXISTS `pyclub`.`event` (
   `date` TIMESTAMP NOT NULL,
   `info` LONGTEXT NOT NULL,
   `club_id` INT NOT NULL,
+  `owner_id` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`idevent`, `club_id`),
   INDEX `fk_event_club1_idx` (`club_id` ASC),
   CONSTRAINT `fk_event_club1`

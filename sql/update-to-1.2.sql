@@ -10,3 +10,14 @@ ALTER TABLE event_membership
 
 ALTER TABLE user
     ALTER email_confirm SET DEFAULT 0;
+
+ALTER TABLE club
+    ADD COLUMN name varchar(100) NOT NULL UNIQUE;
+    ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
+
+ALTER TABLE organization
+    ADD UNIQUE (name);
+    ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
+
+ALTER TABLE event
+    ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
