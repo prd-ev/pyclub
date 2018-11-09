@@ -9,7 +9,7 @@ ALTER TABLE user
 ALTER TABLE event_membership
     CHANGE COLUMN event_club_idclub own_club_id int(11);
 
-ALTER TABLE user 
+ALTER TABLE user
     ADD COLUMN email_confirm tinyint(1) NOT NULL;
 
 ALTER TABLE event_membership
