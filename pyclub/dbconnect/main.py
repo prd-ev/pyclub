@@ -1,7 +1,5 @@
 import pymysql
-from pymysql import escape_string
 from flask_login._compat import unicode
-from datetime import datetime, timedelta
 
 def connection():
 	"""Function connects to database"""

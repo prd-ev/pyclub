@@ -1,7 +1,4 @@
-import pymysql
 from pymysql import escape_string
-from flask_login._compat import unicode
-from datetime import datetime, timedelta
 from pyclub.dbconnect.main import connection
 
 __author__ = "Tomasz Lakomy"

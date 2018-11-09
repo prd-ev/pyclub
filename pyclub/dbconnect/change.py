@@ -1,7 +1,4 @@
-import pymysql
 from pymysql import escape_string
-from flask_login._compat import unicode
-from datetime import datetime, timedelta
 from pyclub.dbconnect.main import connection
 
 __author__ = "Tomasz Lakomy"
@@ -24,7 +21,7 @@ def give_admin(userid):
 def change_mail(userid, new_mail):
 	c, conn = connection()
 	c.execute('UPDATE user SET email=%s WHERE iduser=%s', (escape_string(new_mail), escape_string(str(userid))))
-	c.execute('UPDATE user SET email_confirm=0 WHERE iduser=%s', escape_string(str(userid)))	
+	c.execute('UPDATE user SET email_confirm=0 WHERE iduser=%s', escape_string(str(userid)))
 	conn.commit()
 	c.close()
 	conn.close()
