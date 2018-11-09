@@ -56,3 +56,24 @@ def change_event_date(eventid, new_date):
 	conn.commit()
 	c.close()
 	conn.close()
+
+def give_club_ownership(userid, clubid):
+	c, conn =  connection()
+	c.execute('UPDATE club SET owner_id=%s WHERE idclub=%s', (escape_string(str(userid)), escape_string(str(clubid))))
+	conn.commit()
+	c.close()
+	conn.close()
+
+def give_event_ownership(userid, eventid):
+	c, conn =  connection()
+	c.execute('UPDATE event SET owner_id=%s WHERE idevent=%s', (escape_string(str(userid)), escape_string(str(eventid))))
+	conn.commit()
+	c.close()
+	conn.close()
+
+def give_organization_ownership(userid, organizationid):
+	c, conn =  connection()
+	c.execute('UPDATE organization SET owner_id=%s WHERE idorganization=%s', (escape_string(str(userid)), escape_string(str(organizationid))))
+	conn.commit()
+	c.close()
+	conn.close()
