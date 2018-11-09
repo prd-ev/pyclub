@@ -20,4 +20,5 @@ ALTER TABLE organization
     ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
 
 ALTER TABLE event
+    ADD COLUMN name varchar(100) NOT NULL UNIQUE;
     ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
