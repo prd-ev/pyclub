@@ -68,6 +68,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pyclub`.`event` (
   `idevent` INT NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) UNIQUE,
   `date` TIMESTAMP NOT NULL,
   `info` LONGTEXT NOT NULL,
   `club_id` INT NOT NULL,
