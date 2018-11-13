@@ -11,15 +11,11 @@ ALTER TABLE user
 
 ALTER TABLE club
     ADD COLUMN name varchar(100) NOT NULL UNIQUE;
-<<<<<<< HEAD
 ALTER TABLE club
-=======
->>>>>>> origin/feature/db-handlers
     ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
 
 ALTER TABLE organization
     ADD UNIQUE (name);
-<<<<<<< HEAD
 ALTER TABLE organization
     ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
 
@@ -29,10 +25,8 @@ ALTER TABLE event
 ALTER TABLE event
     ADD UNIQUE (name);
 ALTER TABLE event
-=======
     ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
 
 ALTER TABLE event
     ADD COLUMN name varchar(100) NOT NULL UNIQUE;
->>>>>>> origin/feature/db-handlers
     ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
