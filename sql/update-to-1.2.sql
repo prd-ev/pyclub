@@ -26,3 +26,7 @@ ALTER TABLE event
     ADD UNIQUE (name);
 ALTER TABLE event
     ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
+
+CREATE TABLE database_version
+    (version varchar(50));
+    INSERT INTO database_version (version) VALUES ('1.2');
