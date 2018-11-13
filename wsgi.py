@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for, redirect, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get_organization_by_name, create_club, create_club_membership, get_club, get_club_by_organization, create_event, get_club_membership, give_club_ownership, create_event_membership, give_event_ownership, get_event
+from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get_organization_by_name, create_club, create_club_membership, get_club, get_club_by_organization, create_event, get_club_membership, give_club_ownership, create_event_membership, give_event_ownership, get_event, get_all_organizations
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_confirmation import confirm_token, send_email_authentication
 from main import app
@@ -82,11 +82,11 @@ def add_organization_page():
     return render_template('add_organization.html')
 
 
-'''@app.route("/organizations/")
+@app.route("/organizations/")
 def get_all_organization_page():
-    organization_list = get_all_organization_names()
+    organization_list = get_all_organizations()
     return render_template('organizations.html', list = organization_list)  
-'''
+
 
 @app.route('/organizations/<organization_name>/')
 @login_required
@@ -96,6 +96,7 @@ def organization_page(organization_name):
     current_organization_name = organization_dict.get('name')
     current_organization_id = organization_dict.get('idorganization')
     current_organization_club_list = get_club_by_organization(current_organization_id)
+    print(current_organization_club_list)
     return render_template('organization_profile.html', name = current_organization_name, contact = current_organization_contact, list = current_organization_club_list)
 
 @app.route('/organizations/<organization_name>/new_club/', methods = ["POST", "GET"])
