@@ -18,6 +18,17 @@ def get_user(userkey):
 	user_data.id = user_data['iduser']
 	return user_data
 
+def get_all_organizations():
+	c, conn = connection()
+	c.execute("SELECT name FROM organization")
+	organization_data = c.fetchall()
+	organization_list = []
+	for name in organization_data:
+		organization_list.append(name["name"])
+	c.close()
+	conn.close()
+	return organization_list
+
 def get_organization_by_name(organizationname):
 	"""Function takes organization name and returns dict with organization's data"""
 	c, conn = connection()
