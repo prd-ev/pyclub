@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for, redirect, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get_all_organization_names, get_organization_by_name, create_club, create_club_membership, get_club, get_club_by_organization, create_event
+from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get_all_organization_names, get_organization_by_name, create_club, create_club_membership, get_club, get_club_by_organization, create_event, get_club_membership
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_confirmation import confirm_token, send_email_authentication
 from main import app
@@ -69,10 +69,14 @@ def add_organization_page():
     if request.method == 'POST':
         new_organization_name = request.form['organization_name']
         new_organization_contact = request.form['organization_contact']
+        all_organization_list = get_all_organization_names()
         if new_organization_name and new_organization_contact:
-            create_organization(new_organization_name, new_organization_contact)
-            return redirect(url_for('profile_page'))
-        flash('Fill in all the fields')
+            if new_organization_name not in all_organization_list: 
+                create_organization(new_organization_name, new_organization_contact)
+                return redirect(url_for('profile_page'))
+            flash('Istnieje już organizacje o podanej nazwie')
+        else:    
+            flash('Fill in all the fields')
     return render_template('add_organization.html')
             
 
@@ -115,6 +119,18 @@ def club_page(organization_name, club_name):
     current_club_info = current_club_dict.get('info')
     return render_template('club_profile.html', club_name=club_name, info=current_club_info,organization_name=organization_name)
 
+@app.route('/organizations/<organization_name>/<club_name>/join/')
+def clun_join_page(organization_name, club_name):
+    current_club_dict = get_club(club_name)
+    current_club_id = current_club_dict.get('idclub')
+    club_members = get_club_membership(current_club_id)
+    if current_user.id in club_members:
+        flash('Należysz już do klubu')
+    else:
+        create_club_membership(current_user.id,current_club_id)
+    return redirect(url_for('club_page', organization_name=organization_name, club_name=club_name))
+
+
 @app.route('/organizations/<organization_name>/<club_name>/new_event/', methods=["POST", "GET"])
 def new_event_page(organization_name, club_name):
     if request.method == 'POST':
@@ -128,11 +144,12 @@ def new_event_page(organization_name, club_name):
         new_event_info = request.form['event_info']
         if new_event_date and new_event_info and current_club_id:
             create_event(new_event_date, new_event_info, current_club_id)
-    return render_template('new_event.html', organization_name=organization_name, club_name=club_name)
+    return render_template('add_event.html', organization_name=organization_name, club_name=club_name)
 
 @app.route('/test/')
 def test():
-    x = str(get_club_by_organization(1))
+    xist = get_all_organization_names()
+    x = str(xist)
     return x
 
 
