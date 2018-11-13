@@ -48,7 +48,7 @@ def create_organization(name, contact):
 def create_club(info, organization_id, name):
 	"""Function takes info and organization id, creates and assigns club to organization in database"""
 	c, conn = connection()
-	c.execute('SELECT name FROM organization')
+	c.execute('SELECT name FROM club')
 	names = c.fetchall()
 	names_list = []
 	for clb_name in names:

@@ -8,6 +8,7 @@ PyClub | Kontakt
     <div class="forms">
         <div class="container">
         <form action="/organizations/{{organization_name}}/{{club_name}}/new_event/" method="POST">
+            <input class="form", type="text", name="event_name", placeholder="Nazwa wydarzenia">
             <input class="form", type="text", name="event_info", placeholder="Informacje o wydarzeniu">
             <input type="datetime-local" name="event_date">
             <input class="button" , type="submit", name="submit", value="Stwórz">

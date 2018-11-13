@@ -1,6 +1,6 @@
 from flask import render_template, request, url_for, redirect, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get_all_organization_names, get_organization_by_name, create_club, create_club_membership, get_club, get_club_by_organization, create_event, get_club_membership
+from pyclub.dbconnect import create_user, confirm_email, get_user, create_organization, get_organization_by_name, create_club, create_club_membership, get_club, get_club_by_organization, create_event, get_club_membership, give_club_ownership, create_event_membership, give_event_ownership, get_event
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_confirmation import confirm_token, send_email_authentication
 from main import app
@@ -32,9 +32,12 @@ def register_page():
         new_last_name = request.form['last_name']
         if new_email and new_password and new_first_name and new_last_name and new_password == new_password_confirm and '@' in new_email:
             new_password = generate_password_hash(new_password)
-            create_user(new_first_name, new_last_name, new_email, new_password)
-            send_email_authentication(new_email)
-            return redirect(url_for('index_page'))
+            new_user_create = create_user(new_first_name, new_last_name, new_email, new_password)
+            if new_user_create is None:
+                #JAK NIE MASZ INTERNETU
+                #send_email_authentication(new_email)
+                return redirect(url_for('index_page'))
+            error_message = new_user_create
         elif '@' not in new_email:
             error_message = "Email musi zawierać znak @"
         elif new_password != new_password_confirm:
@@ -63,28 +66,27 @@ def login_page():
     return render_template("login.html", error = error_message)
 
 
-@app.route("/profile/add_organization/", methods = ["POST", "GET"])
+@app.route("/add_organization/", methods = ["POST", "GET"])
 @login_required
 def add_organization_page():
     if request.method == 'POST':
         new_organization_name = request.form['organization_name']
         new_organization_contact = request.form['organization_contact']
-        all_organization_list = get_all_organization_names()
-        if new_organization_name and new_organization_contact:
-            if new_organization_name not in all_organization_list: 
-                create_organization(new_organization_name, new_organization_contact)
-                return redirect(url_for('profile_page'))
-            flash('Istnieje już organizacje o podanej nazwie')
+        if new_organization_contact and new_organization_name:
+                new_organization_create = create_organization(new_organization_name, new_organization_contact)
+                if new_organization_create is None:
+                    return redirect(url_for('profile_page'))
+                flash(new_organization_create)
         else:    
             flash('Fill in all the fields')
     return render_template('add_organization.html')
-            
 
-@app.route("/organizations/")
+
+'''@app.route("/organizations/")
 def get_all_organization_page():
     organization_list = get_all_organization_names()
     return render_template('organizations.html', list = organization_list)  
-
+'''
 
 @app.route('/organizations/<organization_name>/')
 @login_required
@@ -105,11 +107,14 @@ def add_club_page(organization_name):
         new_club_name = request.form["club_name"]
         new_club_info = request.form["club_info"]
         if parent_organization and new_club_info:
-            create_club(new_club_info, parent_organization, new_club_name)
-            club_dict = get_club(new_club_name)
-            new_club_id = club_dict.get('idclub')
-            create_club_membership(current_user.id,new_club_id)
-            return redirect(url_for('organization_page', organization_name=organization_name))
+            new_club_create = create_club(new_club_info, parent_organization, new_club_name)
+            if new_club_create is None:
+                club_dict = get_club(new_club_name)
+                new_club_id = club_dict.get('idclub')
+                create_club_membership(current_user.id,new_club_id)
+                give_club_ownership(current_user.id, new_club_id)
+                return redirect(url_for('organization_page', organization_name=organization_name))
+            flash(new_club_create)
     return render_template('add_club.html', parent_name=organization_name)
 
 
@@ -137,20 +142,24 @@ def new_event_page(organization_name, club_name):
         current_club_dict = get_club(club_name)
         current_club_id = current_club_dict.get('idclub')
         print(current_club_id)
+        new_event_name = request.form['event_name']
         new_event_date = request.form['event_date']
-        new_event_date = new_event_date.split('T')
-        new_event_date = new_event_date[0] + " " + new_event_date[1] + ":00"
-        print(new_event_date)
         new_event_info = request.form['event_info']
-        if new_event_date and new_event_info and current_club_id:
-            create_event(new_event_date, new_event_info, current_club_id)
+        new_event_date = new_event_date.split('T')
+        new_event_date = '{} {}:00'.format(new_event_date[0],new_event_date[1])
+        print(new_event_date)
+        if new_event_date and new_event_info and current_club_id and new_event_name:
+            new_event_create = create_event(new_event_date, new_event_info, current_club_id,new_event_name)
+            if new_event_create is None:
+                new_event_dict = get_event(new_event_name)
+                print(new_event_name)
+                new_event_id = new_event_dict.get('idevent')
+                create_event_membership(current_user.id,new_event_id)
+                give_event_ownership(current_user.id,new_event_id)
+                return redirect(url_for('profile_page'))
+            flash(new_event_create)
     return render_template('add_event.html', organization_name=organization_name, club_name=club_name)
 
-@app.route('/test/')
-def test():
-    xist = get_all_organization_names()
-    x = str(xist)
-    return x
 
 
 @app.route('/logout/')

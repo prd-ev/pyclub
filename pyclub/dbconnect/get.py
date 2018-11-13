@@ -53,10 +53,10 @@ def get_club_by_organization(organizationid):
 	conn.close()
 	return club_data
 
-def get_event(eventid):
+def get_event(eventname):
 	"""Functions takes event id and returns event data"""
 	c, conn = connection()
-	c.execute("SELECT * FROM event WHERE idevent=%s", escape_string(str(eventid)))
+	c.execute("SELECT * FROM event WHERE name=%s", escape_string(str(eventname)))
 	event_data = c.fetchone()
 	c.close()
 	conn.close()
@@ -91,6 +91,7 @@ def get_club_membership(clubid):
 		users_list.append(user["user_id"])
 	return users_list
 
+	
 def get_user_to_club_membership(userid):
 	c, conn = connection()
 	c.execute('SELECT * FROM club_membership WHERE user_id=%s', escape_string(str(userid)))
