@@ -4,15 +4,25 @@
 
 ALTER TABLE event_membership
     DROP FOREIGN KEY fk_user_has_event_event1;
-
-ALTER TABLE event_membership
     DROP COLUMN own_club_id;
 
 ALTER TABLE user
     ALTER email_confirm SET DEFAULT 0;
 
 ALTER TABLE club
-    ADD name varchar(100) NOT NULL UNIQUE;
+    ADD COLUMN name varchar(100) NOT NULL UNIQUE;
+ALTER TABLE club
+    ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
 
 ALTER TABLE organization
     ADD UNIQUE (name);
+ALTER TABLE organization
+    ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
+
+ALTER TABLE event
+    ADD COLUMN name varchar(100) NOT NULL;
+    UPDATE event SET name = idevent;
+ALTER TABLE event
+    ADD UNIQUE (name);
+ALTER TABLE event
+    ADD COLUMN owner_id INT NOT NULL DEFAULT 0;
