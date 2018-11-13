@@ -64,10 +64,10 @@ def get_club_by_organization(organizationid):
 	conn.close()
 	return club_data
 
-def get_event(eventid):
+def get_event(eventname):
 	"""Functions takes event id and returns event data"""
 	c, conn = connection()
-	c.execute("SELECT * FROM event WHERE idevent=%s", escape_string(str(eventid)))
+	c.execute("SELECT * FROM event WHERE name=%s", escape_string(str(eventname)))
 	event_data = c.fetchone()
 	c.close()
 	conn.close()
