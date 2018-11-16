@@ -19,14 +19,15 @@ def get_user(userkey):
 	return user_data
 
 def get_all_organizations():
+	'''Function returns all existing organizations'''
 	c, conn = connection()
 	c.execute("SELECT name FROM organization")
 	organization_data = c.fetchall()
+	c.close()
+	conn.close()
 	organization_list = []
 	for name in organization_data:
 		organization_list.append(name["name"])
-	c.close()
-	conn.close()
 	return organization_list
 
 def get_organization_by_name(organizationname):
@@ -66,15 +67,54 @@ def get_club_by_organization(organizationid):
 	for name in club_data:
 		club_name_list.append(name['name'])
 	return club_name_list
+<<<<<<< HEAD
+=======
+
+def get_club_by_user(userid):
+	"""Functions takes user id and returns list with id's of clubs which user belong to"""
+	c, conn = connection()
+	c.execute("SELECT * FROM club_membership WHERE user_id=%s", escape_string(str(userid)))
+	club_data = c.fetchall()
+	c.close()
+	conn.close()
+	club_id_list = []
+	for id in club_data:
+		club_id_list.append(id['club_id'])
+	return club_id_list
+>>>>>>> origin/feature/db-handlers
 
 def get_event(eventname):
-	"""Functions takes event id and returns event data"""
+	"""Functions takes event name and returns event data"""
 	c, conn = connection()
 	c.execute("SELECT * FROM event WHERE name=%s", escape_string(str(eventname)))
 	event_data = c.fetchone()
 	c.close()
 	conn.close()
 	return event_data
+
+def get_events_by_club(clubid):
+	"""Functions takes club id and returns list with names of events which belong to that club"""
+	c, conn = connection()
+	c.execute("SELECT name FROM event WHERE club_id=%s", escape_string(str(clubid)))
+	event_data = c.fetchall()
+	c.close()
+	conn.close()
+	event_name_list = []
+	for name in event_data:
+		event_name_list.append(name['name'])
+	return event_name_list
+
+def get_events_by_user(userid):
+	"""Functions takes user id and returns list with id's of events which user take part in"""
+	c, conn = connection()
+	c.execute("SELECT * FROM event_membership WHERE user_id=%s", escape_string(str(userid)))
+	event_data = c.fetchall()
+	c.close()
+	conn.close()
+	event_id_list = []
+	for id in event_data:
+		event_id_list.append(id['event_id'])
+	return event_id_list
 
 def get_event_membership(eventid):
 	"""Function takes userid or eventid and returns event membership"""
@@ -85,16 +125,8 @@ def get_event_membership(eventid):
 	conn.close()
 	return eventid
 
-def get_user_to_event_membership(userid):
-	c, conn = connection()
-	c.execute('SELECT * FROM event_membership WHERE user_id=%s', escape_string(str(userid)))
-	membership = c.fetchall()
-	c.close()
-	conn.close()
-	return membership
-
 def get_club_membership(clubid):
-	"""Function takes clubid and returns club membership"""
+	"""Function takes clubid and returns list of id's of users which belong to that club"""
 	c, conn = connection()
 	c.execute('SELECT * FROM club_membership WHERE club_id=%s', escape_string(str(clubid)))
 	users = c.fetchall()
