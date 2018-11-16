@@ -62,7 +62,10 @@ def get_club_by_organization(organizationid):
 	club_data = c.fetchall()
 	c.close()
 	conn.close()
-	return club_data
+	club_name_list = []
+	for name in club_data:
+		club_name_list.append(name['name'])
+	return club_name_list
 
 def get_event(eventname):
 	"""Functions takes event id and returns event data"""

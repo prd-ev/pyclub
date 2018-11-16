@@ -126,7 +126,7 @@ def club_page(organization_name, club_name):
     return render_template('club_profile.html', club_name=club_name, info=current_club_info,organization_name=organization_name)
 
 @app.route('/organizations/<organization_name>/<club_name>/join/')
-def clun_join_page(organization_name, club_name):
+def club_join_page(organization_name, club_name):
     current_club_dict = get_club(club_name)
     current_club_id = current_club_dict.get('idclub')
     club_members = get_club_membership(current_club_id)
@@ -157,7 +157,7 @@ def new_event_page(organization_name, club_name):
                 new_event_id = new_event_dict.get('idevent')
                 create_event_membership(current_user.id,new_event_id)
                 give_event_ownership(current_user.id,new_event_id)
-                return redirect(url_for('profile_page'))
+                return redirect(url_for('club_page', organization_name=organization_name, club_name=club_name))
             flash(new_event_create)
     return render_template('add_event.html', organization_name=organization_name, club_name=club_name)
 
