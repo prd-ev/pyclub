@@ -1,0 +1,23 @@
+from pyclub.dbconnect import *
+from random import randint
+mail = (str(randint(0, 1435241)) + '@mail')
+#print(create_organization('nazwa','mail@123'))
+#print(create_club('informajcsa',1, 'nazwa'))
+#print(create_event('2018-10-31 12:00:00', 'infoevent', 1))
+#print(create_user('imie','nazwisko','mail@','haslo'))
+create_event_membership(2, 4)
+#create_club_membership(1,1)
+#for x in range(0, 5):
+#	create_event_membership(3, x)
+#confirm_email('mama@@@')
+#change_mail(1, 'maasdma@@@')
+#change_event_info(3, 'informacje')
+#change_organization_contact(1, 'kontakt123')
+#change_user_password(1, 'jaasdas')
+#change_event_date(3, '2022-02-11 23:56:05')
+#create_club_membership(2, 1)
+#print(get_club_membership(1))
+#	give_club_ownership(5, 1)
+#give_event_ownership(6, 2)
+#give_organization_ownership(4, 1)
+print(get_event_membership(2))

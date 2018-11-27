@@ -76,8 +76,8 @@ def get_club_by_user(userid):
 	c.close()
 	conn.close()
 	club_id_list = []
-	for id in club_data:
-		club_id_list.append(id['club_id'])
+	for clid in club_data:
+		club_id_list.append(clid['club_id'])
 	return club_id_list
 
 def get_event(eventname):
@@ -109,12 +109,12 @@ def get_events_by_user(userid):
 	c.close()
 	conn.close()
 	event_id_list = []
-	for id in event_data:
-		event_id_list.append(id['event_id'])
+	for evid in event_data:
+		event_id_list.append(evid['event_id'])
 	return event_id_list
 
 def get_event_membership(eventid):
-	"""Function takes userid or eventid and returns event membership"""
+	"""Function takes eventid and returns list with users"""
 	c, conn = connection()
 	c.execute('SELECT * FROM event_membership WHERE event_id=%s', escape_string(str(eventid)))
 	eventid = c.fetchall()
