@@ -4,12 +4,17 @@ PyClub | Logowanie
 {% endblock %}
 {% block section %}
 <div class="container">
-    <div class="forms">
-        <form>
-            <input class="form", type="text", name="email", placeholder="Email">
-            <input class="form", type="text", name="password", placeholder="hasło">
-            <input class="button" , type="button", name="submit", value="Loguj">
-        </form>
+        <div class="formsbox">
+        <div class="forms">
+            <div class="container">
+            <h1>Zaloguj się:</h1>
+            <form>
+                <input class="form", type="text", name="email", placeholder="Email">
+                <input class="form", type="text", name="password", placeholder="hasło">
+                <input class="button" , type="submit", name="submit", value="Zaloguj">
+            </form>
+            </div>
+        </div>
+        </div>
     </div>
-</div>
 {% endblock %}
