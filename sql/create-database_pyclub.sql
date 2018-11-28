@@ -17,6 +17,16 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 CREATE SCHEMA IF NOT EXISTS `pyclub` ;
 USE `pyclub` ;
 
+
+-- -----------------------------------------------------
+-- Table `pyclub`.`database_version`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `test`.`database_version` (
+  `version` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`version`))
+ENGINE = InnoDB;
+
+
 -- -----------------------------------------------------
 -- Table `pyclub`.`user`
 -- -----------------------------------------------------
@@ -68,6 +78,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pyclub`.`event` (
   `idevent` INT NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) UNIQUE,
   `date` TIMESTAMP NOT NULL,
   `info` LONGTEXT NOT NULL,
   `club_id` INT NOT NULL,
@@ -129,3 +140,5 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+INSERT INTO database_version VALUES ('1.2');
