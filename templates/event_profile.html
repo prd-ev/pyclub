@@ -1,0 +1,18 @@
+{% extends "_base.html" %}
+{% block title %}
+PyClub | {{event_name}}
+{% endblock %}
+{% block section %}
+<div id="podstrona">
+<h1>{{event_name}}</h1>
+<p>{{info}}</p>
+<p>{{date}}</p>
+<p><a href='/organizations/{{organization_name}}/{{club_name}}/{{event_name}}/join/'>Dołącz</a></p>
+<button id='membersButton' >Członkowie</button>
+<div id='members' style='max-height:0px;'>
+    {% for user in users_list%}
+        <p>{{user}}</p>
+    {% endfor %}
+</div>
+</div>
+{% endblock %}

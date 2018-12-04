@@ -4,10 +4,12 @@ PyClub | Organizacje
 {% endblock %}
 {% block section %}
 {% for organization in list%}
+<div id="podstrona">
     <div>
         <form action='/organizations/{{organization}}', method="GET">
         <input class="button" , type="submit", name="submit", value={{organization}}>
     </form>
     </div>
 {% endfor %}
+</div>
 {% endblock %}

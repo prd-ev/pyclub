@@ -3,8 +3,23 @@
 PyClub | {{club_name}}
 {% endblock %}
 {% block section %}
+<div id="podstrona">
 <h1>{{club_name}}</h1>
 <p>{{info}}</p>
+{% for event in events_list%}
+    <div>
+        <form action='/organizations/{{organization_name}}/{{club_name}}/{{event}}', method="GET">
+        <input class="button" , type="submit", name="submit", value={{event}}>
+    </form>
+    </div>
+{% endfor %}
 <p><a href='/organizations/{{organization_name}}/{{club_name}}/new_event/'>Nowe wydarzenie</a></p>
 <p><a href='/organizations/{{organization_name}}/{{club_name}}/join/'>Dołącz</a></p>
+<button id='membersButton' >Członkowie</button>
+<div id='members' style='max-height:0px'>
+    {% for user in users_list%}
+        <p>{{user}}</p>
+    {% endfor %}
+</div>
+</div>
 {% endblock %}

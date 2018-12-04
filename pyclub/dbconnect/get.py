@@ -67,8 +67,6 @@ def get_club_by_organization(organizationid):
 	for name in club_data:
 		club_name_list.append(name['name'])
 	return club_name_list
-<<<<<<< HEAD
-=======
 
 def get_club_by_user(userid):
 	"""Functions takes user id and returns list with id's of clubs which user belong to"""
@@ -81,7 +79,6 @@ def get_club_by_user(userid):
 	for id in club_data:
 		club_id_list.append(id['club_id'])
 	return club_id_list
->>>>>>> origin/feature/db-handlers
 
 def get_event(eventname):
 	"""Functions takes event name and returns event data"""
@@ -120,10 +117,13 @@ def get_event_membership(eventid):
 	"""Function takes userid or eventid and returns event membership"""
 	c, conn = connection()
 	c.execute('SELECT * FROM event_membership WHERE event_id=%s', escape_string(str(eventid)))
-	eventid = c.fetchall()
+	events = c.fetchall()
 	c.close()
 	conn.close()
-	return eventid
+	events_list = []
+	for event in events:
+		events_list.append(event['user_id'])
+	return events_list
 
 def get_club_membership(clubid):
 	"""Function takes clubid and returns list of id's of users which belong to that club"""
