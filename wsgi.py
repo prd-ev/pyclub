@@ -225,7 +225,7 @@ def about_page():
 @login_required
 def profile_page():
     return render_template("profile.html")
-
+    
 
 @app.route("/activate/<confirmation_token>/")
 def activate_account(confirmation_token):
